@@ -205,9 +205,9 @@ const styles = StyleSheet.create({
   },
   searchBox: {
     position: "absolute",
-    top: 135,
-    left: 64,
-    right: 64,
+    top: 60,
+    left: 16,
+    right: 16,
     zIndex: 10,
     flexDirection: "row",
     backgroundColor: "white",
