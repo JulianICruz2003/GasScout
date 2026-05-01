@@ -1,0 +1,62 @@
+[
+    {
+        "id": "1",
+        "name": "Shell - N Mesa St",
+        "lat": 31.7765,
+        "lng": -106.5012,
+        "prices": {
+            "regular_petrol": 3.15,
+            "diesel": 3.85,
+            "electric_kwh": 0.48
+        },
+        "address": "2301 N Mesa St, El Paso, TX 79902"
+    },
+    {
+        "id": "2",
+        "name": "Exxon - University Ave",
+        "lat": 31.7721,
+        "lng": -106.5045,
+        "prices": {
+            "regular_petrol": 3.09,
+            "diesel": 3.79,
+            "electric_kwh": null
+        },
+        "address": "1900 N Mesa St, El Paso, TX 79902"
+    },
+    {
+        "id": "3",
+        "name": "Chevron - Sunland Park",
+        "lat": 31.8115,
+        "lng": -106.5412,
+        "prices": {
+            "regular_petrol": 3.25,
+            "diesel": 3.95,
+            "electric_kwh": 0.52
+        },
+        "address": "700 Sunland Park Dr, El Paso, TX 79912"
+    },
+    {
+        "id": "4",
+        "name": "7-Eleven / Alon",
+        "lat": 31.768,
+        "lng": -106.495,
+        "prices": {
+            "regular_petrol": 3.05,
+            "diesel": null,
+            "electric_kwh": null
+        },
+        "address": "1201 N Mesa St, El Paso, TX 79902"
+    },
+    {
+        "id": "5",
+        "name": "ChargePoint Station (EV Only)",
+        "lat": 31.7705,
+        "lng": -106.503,
+        "prices": {
+            "regular_petrol": null,
+            "diesel": null,
+            "electric_kwh": 0.35
+        },
+        "address": "UTEP Campus, El Paso, TX 79968"
+    }
+]
