@@ -11,6 +11,28 @@ import MapView, { Marker, Region } from "react-native-maps";
 import * as Location from "expo-location";
 import stations from "../stations.json";
 
+function formatPrices(prices: {
+  regular_petrol?: number | null;
+  diesel?: number | null;
+  electric_kwh?: number | null;
+}) {
+  const parts = [];
+
+  if (prices.regular_petrol != null) {
+    parts.push(`Regular: $${prices.regular_petrol.toFixed(2)}`);
+  }
+
+  if (prices.diesel != null) {
+    parts.push(`Diesel: $${prices.diesel.toFixed(2)}`);
+  }
+
+  if (prices.electric_kwh != null) {
+    parts.push(`EV: $${prices.electric_kwh.toFixed(2)}/kWh`);
+  }
+
+  return parts.join(" • ");
+}
+
 export default function GasMap() {
   const [region, setRegion] = useState<Region | null>(null);
   const [zip, setZip] = useState("");
@@ -127,7 +149,7 @@ export default function GasMap() {
             longitude: station.lng,
           }}
           title={station.name}
-          description={`${station.prices}`}
+          description={formatPrices(station.prices)}
           />
         ))}
       </MapView>

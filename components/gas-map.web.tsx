@@ -3,6 +3,28 @@ import { View, TextInput, Pressable, Text, StyleSheet } from "react-native";
 import "maplibre-gl/dist/maplibre-gl.css";
 import stations from "../stations.json";
 
+function formatPrices(prices: {
+  regular_petrol?: number | null;
+  diesel?: number | null;
+  electric_kwh?: number | null;
+}) {
+  const parts = [];
+
+  if (prices.regular_petrol != null) {
+    parts.push(`Regular: $${prices.regular_petrol.toFixed(2)}`);
+  }
+
+  if (prices.diesel != null) {
+    parts.push(`Diesel: $${prices.diesel.toFixed(2)}`);
+  }
+
+  if (prices.electric_kwh != null) {
+    parts.push(`EV: $${prices.electric_kwh.toFixed(2)}/kWh`);
+  }
+
+  return parts.join(" • ");
+}
+
 export default function GasMap() {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<any>(null);
@@ -45,11 +67,11 @@ export default function GasMap() {
       map.addControl(new maplibregl.default.NavigationControl(), "top-right");
 
       stations.forEach((station) => {
-        new maplibregl.default.Marker()
+        new maplibregl.default.Marker({ color: "#2563eb" })
           .setLngLat([station.lng, station.lat])
           .setPopup(
             new maplibregl.default.Popup().setHTML(
-              `<strong>${station.name}</strong><br/>${station.prices}`
+              `<strong>${station.name}</strong><br/>${formatPrices(station.prices)}<br/>${station.address}`
             )
           )
           .addTo(map);
@@ -65,7 +87,7 @@ export default function GasMap() {
             zoom: 14,
           });
 
-          new maplibregl.default.Marker({ color: "#2563eb" })
+          new maplibregl.default.Marker({ color: "#dc2626" })
             .setLngLat([longitude, latitude])
             .setPopup(new maplibregl.default.Popup().setHTML("You are here"))
             .addTo(map);
