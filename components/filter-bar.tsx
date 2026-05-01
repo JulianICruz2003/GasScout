@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 16,
     right: 16,
-    bottom: 132,
+    bottom: 140,
     zIndex: 40,
   },
   filterButton: {

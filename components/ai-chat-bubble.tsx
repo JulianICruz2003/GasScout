@@ -27,7 +27,7 @@ type Props = {
 const API_URL =
   Platform.OS === "web"
     ? "http://localhost:3001/chat"
-    : "http://172.20.208.105:3001/chat";
+    : "http://172.20.209.119:3001/chat";
 
 function getDistanceMiles(
   lat1: number,
@@ -43,8 +43,8 @@ function getDistanceMiles(
   const a =
     Math.sin(dLat / 2) ** 2 +
     Math.cos((lat1 * Math.PI) / 180) *
-    Math.cos((lat2 * Math.PI) / 180) *
-    Math.sin(dLng / 2) ** 2;
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLng / 2) ** 2;
 
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
@@ -75,11 +75,11 @@ export default function AIChatBubble({
     const distance =
       userLocation && station.lat && station.lng
         ? getDistanceMiles(
-          userLocation.lat,
-          userLocation.lng,
-          station.lat,
-          station.lng
-        )
+            userLocation.lat,
+            userLocation.lng,
+            station.lat,
+            station.lng
+          )
         : null;
 
     return {
@@ -111,24 +111,16 @@ export default function AIChatBubble({
       ? prepareStationForAI(selectedStation)
       : null;
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
     try {
-      const stationsForAI = stations.map(prepareStationForAI);
-
-      const closestStationForAI =
-        userLocation
-          ? [...stationsForAI]
-            .filter((station) => station.distance_miles != null)
-            .sort((a, b) => a.distance_miles! - b.distance_miles!)[0]
-          : null;
-
-      const selectedStationForAI = selectedStation
-        ? prepareStationForAI(selectedStation)
-        : null;
       const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        signal: controller.signal,
         body: JSON.stringify({
           messages: nextMessages,
           context: {
@@ -141,8 +133,13 @@ export default function AIChatBubble({
         }),
       });
 
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+
       const data = await response.json();
-      console.log("AI RESPONSE:", data);
 
       setMessages((prev) => [
         ...prev,
@@ -152,13 +149,16 @@ export default function AIChatBubble({
         },
       ]);
     } catch (error) {
+      clearTimeout(timeoutId);
+
       console.error("Chat error:", error);
 
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: "I could not connect to the AI server.",
+          content:
+            "I could not connect to the AI server. Make sure your phone and backend server are on the same Wi-Fi network.",
         },
       ]);
     } finally {
@@ -177,11 +177,13 @@ export default function AIChatBubble({
   return (
     <KeyboardAvoidingView
       style={styles.chatWindow}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 24 : 0}
     >
       <View style={styles.header}>
         <Text style={styles.title}>Gas Assistant</Text>
-        <Pressable onPress={() => setOpen(false)}>
+
+        <Pressable style={styles.closeButton} onPress={() => setOpen(false)}>
           <Text style={styles.close}>✕</Text>
         </Pressable>
       </View>
@@ -191,6 +193,7 @@ export default function AIChatBubble({
         data={messages}
         keyExtractor={(_, index) => String(index)}
         style={styles.messages}
+        contentContainerStyle={styles.messagesContent}
         onContentSizeChange={() =>
           listRef.current?.scrollToEnd({ animated: true })
         }
@@ -212,18 +215,16 @@ export default function AIChatBubble({
           onChangeText={setInput}
           placeholder="Ask about gas..."
           style={styles.input}
-          multiline
           returnKeyType="send"
+          blurOnSubmit={false}
           onSubmitEditing={sendMessage}
-          onKeyPress={(e: any) => {
-            if (e.nativeEvent.key === "Enter" && !e.shiftKey) {
-              e.preventDefault?.();
-              sendMessage();
-            }
-          }}
         />
 
-        <Pressable style={styles.sendButton} onPress={sendMessage}>
+        <Pressable
+          style={[styles.sendButton, loading && styles.disabledButton]}
+          onPress={sendMessage}
+          disabled={loading}
+        >
           <Text style={styles.sendText}>{loading ? "..." : "Send"}</Text>
         </Pressable>
       </View>
@@ -234,11 +235,11 @@ export default function AIChatBubble({
 const styles = StyleSheet.create({
   bubble: {
     position: "absolute",
-    right: 20,
-    bottom: 130,
-    width: 64,
-    height: 64,
-    borderRadius: 32,
+    right: 16,
+    bottom: 140,
+    width: 58,
+    height: 58,
+    borderRadius: 29,
     backgroundColor: "#111827",
     alignItems: "center",
     justifyContent: "center",
@@ -246,35 +247,50 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   bubbleText: {
-    fontSize: 28,
+    fontSize: 26,
   },
   chatWindow: {
     position: "absolute",
-    left: 1080,
+    left: 16,
     right: 16,
-    bottom: 150,
-    height: 250,
+    bottom: 140,
+    height: 360,
     backgroundColor: "white",
     borderRadius: 24,
     padding: 14,
     zIndex: 100,
     elevation: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.18,
+    shadowRadius: 16,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 10,
   },
   title: {
     fontSize: 18,
     fontWeight: "900",
   },
+  closeButton: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: "#f1f5f9",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   close: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "900",
   },
   messages: {
     flex: 1,
+  },
+  messagesContent: {
+    paddingBottom: 6,
   },
   message: {
     padding: 10,
@@ -297,20 +313,25 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 8,
     marginTop: 8,
+    alignItems: "center",
   },
   input: {
     flex: 1,
     backgroundColor: "#f8fafc",
     borderRadius: 16,
     paddingHorizontal: 12,
-    paddingVertical: 10,
-    maxHeight: 90,
+    paddingVertical: 12,
+    fontSize: 16,
   },
   sendButton: {
     backgroundColor: "#111827",
     borderRadius: 16,
     paddingHorizontal: 14,
+    paddingVertical: 12,
     justifyContent: "center",
+  },
+  disabledButton: {
+    opacity: 0.6,
   },
   sendText: {
     color: "white",
