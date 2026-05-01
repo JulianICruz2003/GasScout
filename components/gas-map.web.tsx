@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
   },
   searchBox: {
     position: "absolute",
-    top: 10,
+    top: 16,
     left: 64,
     right: 64,
     zIndex: 10,
@@ -231,9 +231,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     padding: 8,
     gap: 8,
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
+    elevation: 5,
   },
   input: {
     flex: 1,

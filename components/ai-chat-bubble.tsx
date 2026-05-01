@@ -43,8 +43,8 @@ function getDistanceMiles(
   const a =
     Math.sin(dLat / 2) ** 2 +
     Math.cos((lat1 * Math.PI) / 180) *
-      Math.cos((lat2 * Math.PI) / 180) *
-      Math.sin(dLng / 2) ** 2;
+    Math.cos((lat2 * Math.PI) / 180) *
+    Math.sin(dLng / 2) ** 2;
 
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
@@ -75,11 +75,11 @@ export default function AIChatBubble({
     const distance =
       userLocation && station.lat && station.lng
         ? getDistanceMiles(
-            userLocation.lat,
-            userLocation.lng,
-            station.lat,
-            station.lng
-          )
+          userLocation.lat,
+          userLocation.lng,
+          station.lat,
+          station.lng
+        )
         : null;
 
     return {
@@ -112,6 +112,18 @@ export default function AIChatBubble({
       : null;
 
     try {
+      const stationsForAI = stations.map(prepareStationForAI);
+
+      const closestStationForAI =
+        userLocation
+          ? [...stationsForAI]
+            .filter((station) => station.distance_miles != null)
+            .sort((a, b) => a.distance_miles! - b.distance_miles!)[0]
+          : null;
+
+      const selectedStationForAI = selectedStation
+        ? prepareStationForAI(selectedStation)
+        : null;
       const response = await fetch(API_URL, {
         method: "POST",
         headers: {

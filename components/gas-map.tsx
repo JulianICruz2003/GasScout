@@ -50,34 +50,44 @@ export default function GasMap({
   selectedStationVersion,
 }: Props) {
   const [region, setRegion] = useState<Region | null>(null);
+  const [userLocation, setUserLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
   const [zip, setZip] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     async function getLocation() {
       const { status } = await Location.requestForegroundPermissionsAsync();
-  
+
       if (status !== "granted") {
         setErrorMsg("Location permission denied.");
         return;
       }
-  
+
       const location = await Location.getCurrentPositionAsync({});
-  
-      setRegion({
+
+      const currentLocation = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
+      };
+
+      setUserLocation(currentLocation);
+
+      setRegion({
+        ...currentLocation,
         latitudeDelta: 0.03,
         longitudeDelta: 0.03,
       });
     }
-  
+
     getLocation();
   }, []);
-  
+
   useEffect(() => {
     if (!selectedStation) return;
-  
+
     setRegion({
       latitude: selectedStation.lat,
       longitude: selectedStation.lng,
@@ -159,25 +169,26 @@ export default function GasMap({
         showsUserLocation
         showsMyLocationButton
       >
-      <Marker
-        coordinate={{
-          latitude: region!.latitude,
-          longitude: region!.longitude,
-        }}
-        title="You"
-        />
+        {userLocation ? (
+          <Marker coordinate={userLocation} title="You" pinColor="#dc2626" />
+        ) : null}
 
         {stations.map((station) => {
           const isHighlighted = highlightedStation?.id === station.id;
+          const isSelected = selectedStation?.id === station.id;
 
           return (
             <Marker
-              key={`${station.id}-${isHighlighted ? "highlighted" : "normal"}`}
+              key={`${station.id}-${
+                isHighlighted || isSelected ? "active" : "normal"
+              }`}
               coordinate={{
                 latitude: station.lat,
                 longitude: station.lng,
               }}
-              pinColor={isHighlighted ? "#f97316" : "#2563eb"}
+              pinColor={
+                isSelected ? "#dc2626" : isHighlighted ? "#f97316" : "#2563eb"
+              }
               title={station.name}
               description={formatPrices(station.prices)}
             />
@@ -206,9 +217,9 @@ const styles = StyleSheet.create({
   },
   searchBox: {
     position: "absolute",
-    top: 135,
-    left: 64,
-    right: 64,
+    top: 60,
+    left: 16,
+    right: 16,
     zIndex: 10,
     flexDirection: "row",
     backgroundColor: "white",
@@ -234,7 +245,7 @@ const styles = StyleSheet.create({
   },
   messageBox: {
     position: "absolute",
-    top: 170,
+    top: 112,
     left: 16,
     right: 16,
     zIndex: 11,

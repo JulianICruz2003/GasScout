@@ -9,9 +9,10 @@ import {
 } from "react-native";
 import MapView, { Marker, Region } from "react-native-maps";
 import * as Location from "expo-location";
-import stations from "../stations.json";
 
-type Station = typeof stations[number];
+import stationsData from "../stations.json";
+
+type Station = typeof stationsData[number];
 
 function formatPrices(prices: {
   regular_petrol?: number | null;
@@ -35,7 +36,6 @@ function formatPrices(prices: {
   return parts.join(" • ");
 }
 
-
 type Props = {
   stations: Station[];
   selectedStation: Station | null;
@@ -50,6 +50,10 @@ export default function GasMap({
   selectedStationVersion,
 }: Props) {
   const [region, setRegion] = useState<Region | null>(null);
+  const [userLocation, setUserLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
   const [zip, setZip] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -64,9 +68,15 @@ export default function GasMap({
 
       const location = await Location.getCurrentPositionAsync({});
 
-      setRegion({
+      const currentLocation = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
+      };
+
+      setUserLocation(currentLocation);
+
+      setRegion({
+        ...currentLocation,
         latitudeDelta: 0.03,
         longitudeDelta: 0.03,
       });
@@ -159,25 +169,26 @@ export default function GasMap({
         showsUserLocation
         showsMyLocationButton
       >
-        <Marker
-          coordinate={{
-            latitude: region!.latitude,
-            longitude: region!.longitude,
-          }}
-          title="Selected area"
-          description={zip ? `ZIP: ${zip}` : "Your current location"}
-        />
+        {userLocation ? (
+          <Marker coordinate={userLocation} title="You" pinColor="#dc2626" />
+        ) : null}
+
         {stations.map((station) => {
           const isHighlighted = highlightedStation?.id === station.id;
+          const isSelected = selectedStation?.id === station.id;
 
           return (
             <Marker
-              key={`${station.id}-${isHighlighted ? "highlighted" : "normal"}`}
+              key={`${station.id}-${
+                isHighlighted || isSelected ? "active" : "normal"
+              }`}
               coordinate={{
                 latitude: station.lat,
                 longitude: station.lng,
               }}
-              pinColor={isHighlighted ? "#f97316" : "#2563eb"}
+              pinColor={
+                isSelected ? "#dc2626" : isHighlighted ? "#f97316" : "#2563eb"
+              }
               title={station.name}
               description={formatPrices(station.prices)}
             />
@@ -234,7 +245,7 @@ const styles = StyleSheet.create({
   },
   messageBox: {
     position: "absolute",
-    top: 170,
+    top: 112,
     left: 16,
     right: 16,
     zIndex: 11,
@@ -247,13 +258,5 @@ const styles = StyleSheet.create({
     color: "#b91c1c",
     fontWeight: "700",
     textAlign: "center",
-  },
-  blueMarker: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    backgroundColor: "#2563eb",
-    borderWidth: 3,
-    borderColor: "white",
   },
 });
