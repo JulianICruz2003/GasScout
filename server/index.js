@@ -4,47 +4,99 @@ import cors from "cors";
 import OpenAI from "openai";
 
 const app = express();
+const PORT = 3001;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "2mb" }));
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-app.get("/", (req, res) => {
-  res.send("GasScout AI server is running.");
-});
+function buildStationSummary(stations = []) {
+  return stations
+    .map((s) => {
+      return [
+        `Name: ${s.name}`,
+        `Address: ${s.address}`,
+        `Regular gas: ${s.prices?.regular_petrol ?? "N/A"}`,
+        `Diesel: ${s.prices?.diesel ?? "N/A"}`,
+        `EV: ${s.prices?.electric_kwh ?? "N/A"}`,
+        `Latitude: ${s.lat}`,
+        `Longitude: ${s.lng}`,
+      ].join(" | ");
+    })
+    .join("\n");
+}
 
 app.post("/chat", async (req, res) => {
-  console.log("Chat route hit:", req.body);
-
   try {
-    const { messages = [] } = req.body;
+    const { messages = [], context = {} } = req.body;
 
-    const response = await client.responses.create({
+    const stationSummary = buildStationSummary(context.stations ?? []);
+
+    const selectedStationText = context.selectedStation
+      ? JSON.stringify(context.selectedStation, null, 2)
+      : "None";
+
+    const userLocationText = context.userLocation
+      ? `${context.userLocation.lat}, ${context.userLocation.lng}`
+      : "Unknown";
+
+    const completion = await client.chat.completions.create({
       model: "gpt-4.1-mini",
-      input: [
+      messages: [
         {
           role: "system",
-          content:
-            "You are GasScout AI. Help users find cheap gas, compare stations, explain filters, and answer briefly.",
+          content: `
+You are the GasScout assistant.
+
+You help users understand the gas stations shown on their app map.
+
+Use the station data below when answering questions about:
+- cheapest gas
+- diesel availability
+- EV charging
+- station addresses
+- selected station
+- nearby stations
+- gas prices
+
+User location:
+${userLocationText}
+
+Selected station:
+${selectedStationText}
+
+Stations currently on the map:
+${stationSummary}
+
+Rules:
+- If the user asks about gas stations, use the station data.
+- If the user asks for the cheapest station, compare regular gas prices.
+- If a station has N/A for a fuel type, do not claim it has that fuel.
+- Keep answers short and helpful.
+          `,
         },
-        ...messages,
+        ...messages.map((m) => ({
+          role: m.role,
+          content: m.content,
+        })),
       ],
     });
 
     res.json({
-      reply: response.output_text,
+      reply: completion.choices[0].message.content,
     });
   } catch (error) {
-    console.error("OpenAI error:", error);
+    console.error("Chat server error:", error);
     res.status(500).json({
-      reply: "Sorry, I could not connect to the AI right now.",
+      reply: "Sorry, the AI server had an error.",
+      error: error.message,
     });
   }
 });
 
-app.listen(3001, () => {
-  console.log("Server running on http://localhost:3001");
+app.listen(PORT, () => {
+  console.log(`AI server running at http://localhost:${PORT}`);
 });

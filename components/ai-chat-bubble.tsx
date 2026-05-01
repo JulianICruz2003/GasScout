@@ -9,19 +9,32 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import stationsData from "../stations.json";
 
 type Message = {
   role: "user" | "assistant";
   content: string;
 };
 
-const API_URL = 
-    Platform.OS === "web"
-      ? "http://localhost:3001/chat"
-      : "http://172.20.208.105:3001/chat";
+type Station = typeof stationsData[number];
+
+type Props = {
+  stations: Station[];
+  selectedStation: Station | null;
+  userLocation: { lat: number; lng: number } | null;
+};
+
+const API_URL =
+  Platform.OS === "web"
+    ? "http://localhost:3001/chat"
+    : "http://172.20.208.105:3001/chat";
 
 
-export default function AIChatBubble() {
+export default function AIChatBubble({
+  stations,
+  selectedStation,
+  userLocation,
+}: Props) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -55,6 +68,11 @@ export default function AIChatBubble() {
         },
         body: JSON.stringify({
           messages: nextMessages,
+          context: {
+            stations,
+            selectedStation,
+            userLocation,
+          },
         }),
       });
 
@@ -126,6 +144,14 @@ export default function AIChatBubble() {
           placeholder="Ask about gas..."
           style={styles.input}
           multiline
+          returnKeyType="send"
+          onSubmitEditing={sendMessage}
+          onKeyPress={(e: any) => {
+            if (e.nativeEvent.key === "Enter" && !e.shiftKey) {
+              e.preventDefault?.();
+              sendMessage();
+            }
+          }}
         />
 
         <Pressable style={styles.sendButton} onPress={sendMessage}>
@@ -155,10 +181,10 @@ const styles = StyleSheet.create({
   },
   chatWindow: {
     position: "absolute",
-    left: 16,
+    left: 1080,
     right: 16,
-    bottom: 110,
-    height: 430,
+    bottom: 150,
+    height: 250,
     backgroundColor: "white",
     borderRadius: 24,
     padding: 14,

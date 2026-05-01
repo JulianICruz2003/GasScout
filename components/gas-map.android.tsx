@@ -11,6 +11,8 @@ import MapView, { Marker, Region } from "react-native-maps";
 import * as Location from "expo-location";
 import stations from "../stations.json";
 
+type Station = typeof stations[number];
+
 function formatPrices(prices: {
   regular_petrol?: number | null;
   diesel?: number | null;
@@ -33,19 +35,16 @@ function formatPrices(prices: {
   return parts.join(" • ");
 }
 
-type Station = {
-  id: string;
-  lat: number;
-  lng: number;
-};
 
 type Props = {
+  stations: Station[];
   selectedStation: Station | null;
   highlightedStation: Station | null;
   selectedStationVersion: number;
 };
 
 export default function GasMap({
+  stations,
   selectedStation,
   highlightedStation,
   selectedStationVersion,
@@ -57,14 +56,14 @@ export default function GasMap({
   useEffect(() => {
     async function getLocation() {
       const { status } = await Location.requestForegroundPermissionsAsync();
-  
+
       if (status !== "granted") {
         setErrorMsg("Location permission denied.");
         return;
       }
-  
+
       const location = await Location.getCurrentPositionAsync({});
-  
+
       setRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -72,13 +71,13 @@ export default function GasMap({
         longitudeDelta: 0.03,
       });
     }
-  
+
     getLocation();
   }, []);
-  
+
   useEffect(() => {
     if (!selectedStation) return;
-  
+
     setRegion({
       latitude: selectedStation.lat,
       longitude: selectedStation.lng,

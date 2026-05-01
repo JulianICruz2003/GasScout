@@ -30,80 +30,174 @@ function getDistanceMiles(
   const a =
     Math.sin(dLat / 2) ** 2 +
     Math.cos((lat1 * Math.PI) / 180) *
-      Math.cos((lat2 * Math.PI) / 180) *
-      Math.sin(dLng / 2) ** 2;
+    Math.cos((lat2 * Math.PI) / 180) *
+    Math.sin(dLng / 2) ** 2;
 
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
-export default function MapScreen() {
-  const cheapestStation = useMemo(() => getCheapestStation(), []);
-  const [selectedStation, setSelectedStation] = useState<Station | null>(null);
-  const [highlightedStation, setHighlightedStation] = useState<Station | null>(null); 
-  const [selectedStationVersion, setSelectedStationVersion] = useState(0);
+function getStationBrand(name: string) {
+  return name.split(" - ")[0].trim();
+}
 
+export default function MapScreen() {
   const [userLocation, setUserLocation] = useState<{
     lat: number;
     lng: number;
   } | null>(null);
-  
+
+  type FilterMode = "cheapest" | "closest";
+  type FuelType = "petrol" | "diesel" | "electric";
+
+  const [fuelType, setFuelType] = useState<FuelType>("petrol");
+  const [activeFilter, setActiveFilter] = useState<FilterMode>("cheapest");
+  const [maxDistanceMiles, setMaxDistanceMiles] = useState(10);
+  const stationBrands = useMemo(() => {
+    return Array.from(new Set(stations.map((station) => getStationBrand(station.name))));
+  }, []);
+  const [selectedBrands, setSelectedBrands] = useState<string[]>(stationBrands);
+
+  function getFuelPrice(station: Station, fuelType: FuelType) {
+    if (fuelType === "petrol") return station.prices.regular_petrol;
+    if (fuelType === "diesel") return station.prices.diesel;
+    return station.prices.electric_kwh;
+  }
+
+  function toggleBrand(brand: string) {
+    setSelectedBrands((current) =>
+      current.includes(brand)
+        ? current.filter((item) => item !== brand)
+        : [...current, brand]
+    );
+  }
+
+  const filteredStations = useMemo(() => {
+    return stations.filter((station) => {
+      const brand = getStationBrand(station.name);
+
+      if (!selectedBrands.includes(brand)) {
+        return false;
+      }
+
+      if (getFuelPrice(station, fuelType) == null) {
+        return false;
+      }
+
+      if (!userLocation) {
+        return true;
+      }
+
+      const distance = getDistanceMiles(
+        userLocation.lat,
+        userLocation.lng,
+        station.lat,
+        station.lng
+      );
+
+      return distance <= maxDistanceMiles;
+    });
+  }, [selectedBrands, userLocation, maxDistanceMiles, fuelType]);
+
+  const cheapestStation = useMemo(() => {
+    return [...filteredStations].sort((a, b) => {
+      const aPrice = getFuelPrice(a, fuelType) ?? Infinity;
+      const bPrice = getFuelPrice(b, fuelType) ?? Infinity;
+      return aPrice - bPrice;
+    })[0] ?? stations[0];
+  }, [filteredStations, fuelType]);
+
+  const closestStation = useMemo(() => {
+    if (!userLocation) return null;
+
+    return [...filteredStations].sort((a, b) => {
+      const aDistance = getDistanceMiles(userLocation.lat, userLocation.lng, a.lat, a.lng);
+      const bDistance = getDistanceMiles(userLocation.lat, userLocation.lng, b.lat, b.lng);
+      return aDistance - bDistance;
+    })[0] ?? null;
+  }, [userLocation, filteredStations]);
+
+  const featuredStation =
+    activeFilter === "closest" && closestStation
+      ? closestStation
+      : cheapestStation;
+
+
+  const [selectedStation, setSelectedStation] = useState<Station | null>(null);
+  const [highlightedStation, setHighlightedStation] = useState<Station | null>(null);
+  const [selectedStationVersion, setSelectedStationVersion] = useState(0);
+
   useEffect(() => {
     async function loadLocation() {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") return;
-  
+
       const location = await Location.getCurrentPositionAsync({});
-  
+
       setUserLocation({
         lat: location.coords.latitude,
         lng: location.coords.longitude,
       });
     }
-  
+
     loadLocation();
   }, []);
 
   return (
     <View style={styles.container}>
       <GasMap
+        stations={filteredStations}
         selectedStation={selectedStation}
         highlightedStation={highlightedStation}
         selectedStationVersion={selectedStationVersion}
-/>
+      />
 
-      <View style={styles.overlay}>
-        <FilterBar />
-      </View>
+      <FilterBar
+        activeFilter={activeFilter}
+        onChangeFilter={setActiveFilter}
+        fuelType={fuelType}
+        onChangeFuelType={setFuelType}
+        maxDistanceMiles={maxDistanceMiles}
+        onChangeMaxDistanceMiles={setMaxDistanceMiles}
+        selectedBrands={selectedBrands}
+        onToggleBrand={toggleBrand}
+        stationBrands={stationBrands}
+      />
 
-      <AIChatBubble />
+      <AIChatBubble
+        stations={stations}
+        selectedStation={selectedStation}
+        userLocation={userLocation}
+      />
 
       <Pressable
         style={styles.bottomSheet}
         onPress={() => {
-          setSelectedStation(cheapestStation);
+          setSelectedStation(featuredStation);
           setSelectedStationVersion((current) => current + 1);
         }}
-        onHoverIn={() => setHighlightedStation(cheapestStation)}
+        onHoverIn={() => setHighlightedStation(featuredStation)}
         onHoverOut={() => setHighlightedStation(null)}
       >
         <StationCard
-          name={cheapestStation.name}
+          name={featuredStation.name}
           price={
-          cheapestStation.prices.regular_petrol != null
-            ? `$${cheapestStation.prices.regular_petrol.toFixed(2)}`
-            : "N/A"
+            getFuelPrice(featuredStation, fuelType) != null
+              ? `$${getFuelPrice(featuredStation, fuelType)!.toFixed(2)}`
+              : "N/A"
           }
           distance={
             userLocation
               ? `${getDistanceMiles(
-                  userLocation.lat,
-                  userLocation.lng,
-                  cheapestStation.lat,
-                  cheapestStation.lng
-                ).toFixed(1)} miles away`
-              : "Cheapest nearby"
+                userLocation.lat,
+                userLocation.lng,
+                featuredStation.lat,
+                featuredStation.lng
+              ).toFixed(1)} miles`
+              : activeFilter === "closest"
+                ? "Closest nearby"
+                : "Cheapest nearby"
           }
-          address={cheapestStation.address}
+          address={featuredStation.address}
         />
       </Pressable>
     </View>

@@ -9,7 +9,10 @@ import {
 } from "react-native";
 import MapView, { Marker, Region } from "react-native-maps";
 import * as Location from "expo-location";
-import stations from "../stations.json";
+
+import stationsData from "../stations.json";
+
+type Station = typeof stationsData[number];
 
 function formatPrices(prices: {
   regular_petrol?: number | null;
@@ -33,19 +36,15 @@ function formatPrices(prices: {
   return parts.join(" • ");
 }
 
-type Station = {
-  id: string;
-  lat: number;
-  lng: number;
-};
-
 type Props = {
+  stations: Station[];
   selectedStation: Station | null;
   highlightedStation: Station | null;
   selectedStationVersion: number;
 };
 
 export default function GasMap({
+  stations,
   selectedStation,
   highlightedStation,
   selectedStationVersion,

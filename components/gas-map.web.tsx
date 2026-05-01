@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { View, TextInput, Pressable, Text, StyleSheet } from "react-native";
 import "maplibre-gl/dist/maplibre-gl.css";
-import stations from "../stations.json";
+import stationsData from "../stations.json";
+
+type Station = typeof stationsData[number];
 
 function formatPrices(prices: {
   regular_petrol?: number | null;
@@ -25,19 +27,15 @@ function formatPrices(prices: {
   return parts.join(" • ");
 }
 
-type Station = {
-  id: string;
-  lat: number;
-  lng: number;
-};
-
 type Props = {
+  stations: Station[];
   selectedStation: Station | null;
   highlightedStation: Station | null;
   selectedStationVersion: number;
 };
 
 export default function GasMap({
+  stations,
   selectedStation,
   highlightedStation,
   selectedStationVersion,
@@ -47,6 +45,7 @@ export default function GasMap({
   const stationMarkersRef = useRef<Record<string, any>>({});
   const [zip, setZip] = useState("");
 
+  // 1. Load map ONCE
   useEffect(() => {
     let mounted = true;
 
@@ -83,21 +82,7 @@ export default function GasMap({
 
       map.addControl(new maplibregl.default.NavigationControl(), "top-right");
 
-      stations.forEach((station) => {
-        const marker = new maplibregl.default.Marker({
-          color: "#2563eb",
-        })
-          .setLngLat([station.lng, station.lat])
-          .setPopup(
-            new maplibregl.default.Popup().setHTML(
-              `<strong>${station.name}</strong><br/>${formatPrices(station.prices)}<br/>${station.address}`
-            )
-          )
-          .addTo(map);
-      
-        stationMarkersRef.current[station.id] = marker;
-      });
-
+      // user location
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
           const longitude = position.coords.longitude;
@@ -120,35 +105,59 @@ export default function GasMap({
 
     return () => {
       mounted = false;
+
+      Object.values(stationMarkersRef.current).forEach((marker) => {
+        marker.remove();
+      });
+
+      stationMarkersRef.current = {};
+
       if (mapRef.current) {
         mapRef.current.remove();
       }
     };
   }, []);
 
-  // Highlight useEffect
+  // 2. UPDATE markers when filtered stations change (THIS FIXES YOUR SLIDER)
   useEffect(() => {
-    Object.entries(stationMarkersRef.current).forEach(([stationId, marker]) => {
-      const markerElement = marker.getElement();
-      const iconElement = markerElement.firstElementChild as HTMLElement | null;
-  
-      if (!iconElement) return;
-  
-      iconElement.style.transition = "transform 0.2s ease";
-  
-      if (stationId === highlightedStation?.id) {
-        iconElement.style.transform = "scale(1.8)";
-        markerElement.style.zIndex = "999";
-      } else {
-        iconElement.style.transform = "scale(1)";
-        markerElement.style.zIndex = "";
-      }
-    });
-  }, [highlightedStation]);
+    async function updateMarkers() {
+      if (!mapRef.current) return;
 
+      const maplibregl = await import("maplibre-gl");
+
+      // remove old markers
+      Object.values(stationMarkersRef.current).forEach((marker) => {
+        marker.remove();
+      });
+
+      stationMarkersRef.current = {};
+
+      // add new filtered markers
+      stations.forEach((station) => {
+        const marker = new maplibregl.default.Marker({
+          color: highlightedStation?.id === station.id ? "#f97316" : "#2563eb",
+        })
+          .setLngLat([station.lng, station.lat])
+          .setPopup(
+            new maplibregl.default.Popup().setHTML(
+              `<strong>${station.name}</strong><br/>${formatPrices(
+                station.prices
+              )}<br/>${station.address}`
+            )
+          )
+          .addTo(mapRef.current);
+
+        stationMarkersRef.current[station.id] = marker;
+      });
+    }
+
+    updateMarkers();
+  }, [stations, highlightedStation]);
+
+  // 3. Zoom to selected station
   useEffect(() => {
     if (!selectedStation || !mapRef.current) return;
-  
+
     mapRef.current.flyTo({
       center: [selectedStation.lng, selectedStation.lat],
       zoom: 15,
@@ -184,6 +193,13 @@ export default function GasMap({
           placeholder="Enter ZIP code"
           style={styles.input}
           keyboardType="number-pad"
+          returnKeyType="search"
+          onSubmitEditing={searchZip}
+          onKeyPress={(e: any) => {
+            if (e.nativeEvent.key === "Enter") {
+              searchZip();
+            }
+          }}
         />
 
         <Pressable style={styles.button} onPress={searchZip}>
