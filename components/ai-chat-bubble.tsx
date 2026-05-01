@@ -173,10 +173,10 @@ const styles = StyleSheet.create({
   },
   chatWindow: {
     position: "absolute",
-    left: 16,
+    left: 1080,
     right: 16,
-    bottom: 110,
-    height: 430,
+    bottom: 150,
+    height: 250,
     backgroundColor: "white",
     borderRadius: 24,
     padding: 14,
