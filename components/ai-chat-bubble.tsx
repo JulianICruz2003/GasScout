@@ -9,10 +9,19 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import stationsData from "../stations.json";
 
 type Message = {
   role: "user" | "assistant";
   content: string;
+};
+
+type Station = typeof stationsData[number];
+
+type Props = {
+  stations: Station[];
+  selectedStation: Station | null;
+  userLocation: { lat: number; lng: number } | null;
 };
 
 const API_URL = 
@@ -21,7 +30,11 @@ const API_URL =
       : "http://172.20.208.105:3001/chat";
 
 
-export default function AIChatBubble() {
+export default function AIChatBubble({
+  stations,
+  selectedStation,
+  userLocation,
+}: Props) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -55,6 +68,11 @@ export default function AIChatBubble() {
         },
         body: JSON.stringify({
           messages: nextMessages,
+          context: {
+            stations,
+            selectedStation,
+            userLocation,
+          },
         }),
       });
 

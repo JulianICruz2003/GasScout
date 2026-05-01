@@ -43,10 +43,6 @@ app-example
 /ios
 /android
 
-# other
-./package-lock.json
-
-
 # Logs
 *.log
 

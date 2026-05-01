@@ -75,7 +75,11 @@ export default function MapScreen() {
         <FilterBar />
       </View>
 
-      <AIChatBubble />
+      <AIChatBubble
+        stations={stations}
+        selectedStation={selectedStation}
+        userLocation={userLocation}
+      />
 
       <Pressable
         style={styles.bottomSheet}
