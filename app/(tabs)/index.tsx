@@ -2,6 +2,7 @@ import { View, StyleSheet } from "react-native";
 import GasMap from "../../components/gas-map";
 import FilterBar from "../../components/filter-bar";
 import StationCard from "../../components/station-card";
+import AIChatBubble from "../../components/ai-chat-bubble";
 
 export default function MapScreen() {
   return (
@@ -11,6 +12,8 @@ export default function MapScreen() {
       <View style={styles.overlay}>
         <FilterBar />
       </View>
+
+      <AIChatBubble />
 
       <View style={styles.bottomSheet}>
         <StationCard

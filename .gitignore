@@ -3,9 +3,10 @@ node_modules/
 
 # environment
 .env
-.env*.local
+.env.*
 
 # Expo
+.expo-shared/
 .expo/
 dist/
 web-build/
@@ -44,3 +45,11 @@ app-example
 
 # other
 ./package-lock.json
+
+
+# Logs
+*.log
+
+# Server
+/server/node_modules/
+/server/.env

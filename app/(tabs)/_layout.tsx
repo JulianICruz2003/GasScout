@@ -21,16 +21,6 @@ export default function TabsLayout() {
           ),
         }}
       />
-
-      <Tabs.Screen
-        name="chat"
-        options={{
-          title: "Assistant",
-          tabBarIcon: ({ color, size }) => (
-            <MessageCircle color={color} size={size} />
-          ),
-        }}
-      />
     </Tabs>
   );
 }
