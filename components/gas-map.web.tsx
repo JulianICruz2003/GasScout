@@ -26,17 +26,25 @@ function formatPrices(prices: {
 }
 
 type Station = {
+  id: string;
   lat: number;
   lng: number;
 };
 
 type Props = {
   selectedStation: Station | null;
+  highlightedStation: Station | null;
+  selectedStationVersion: number;
 };
 
-export default function GasMap({ selectedStation }: Props) {
+export default function GasMap({
+  selectedStation,
+  highlightedStation,
+  selectedStationVersion,
+}: Props) {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<any>(null);
+  const stationMarkersRef = useRef<Record<string, any>>({});
   const [zip, setZip] = useState("");
 
   useEffect(() => {
@@ -76,7 +84,9 @@ export default function GasMap({ selectedStation }: Props) {
       map.addControl(new maplibregl.default.NavigationControl(), "top-right");
 
       stations.forEach((station) => {
-        new maplibregl.default.Marker({ color: "#2563eb" })
+        const marker = new maplibregl.default.Marker({
+          color: "#2563eb",
+        })
           .setLngLat([station.lng, station.lat])
           .setPopup(
             new maplibregl.default.Popup().setHTML(
@@ -84,6 +94,8 @@ export default function GasMap({ selectedStation }: Props) {
             )
           )
           .addTo(map);
+      
+        stationMarkersRef.current[station.id] = marker;
       });
 
       if (navigator.geolocation) {
@@ -114,6 +126,26 @@ export default function GasMap({ selectedStation }: Props) {
     };
   }, []);
 
+  // Highlight useEffect
+  useEffect(() => {
+    Object.entries(stationMarkersRef.current).forEach(([stationId, marker]) => {
+      const markerElement = marker.getElement();
+      const iconElement = markerElement.firstElementChild as HTMLElement | null;
+  
+      if (!iconElement) return;
+  
+      iconElement.style.transition = "transform 0.2s ease";
+  
+      if (stationId === highlightedStation?.id) {
+        iconElement.style.transform = "scale(1.8)";
+        markerElement.style.zIndex = "999";
+      } else {
+        iconElement.style.transform = "scale(1)";
+        markerElement.style.zIndex = "";
+      }
+    });
+  }, [highlightedStation]);
+
   useEffect(() => {
     if (!selectedStation || !mapRef.current) return;
   
@@ -121,7 +153,7 @@ export default function GasMap({ selectedStation }: Props) {
       center: [selectedStation.lng, selectedStation.lat],
       zoom: 15,
     });
-  }, [selectedStation]);
+  }, [selectedStation, selectedStationVersion]);
 
   async function searchZip() {
     if (!zip.trim()) return;

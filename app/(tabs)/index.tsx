@@ -39,6 +39,8 @@ function getDistanceMiles(
 export default function MapScreen() {
   const cheapestStation = useMemo(() => getCheapestStation(), []);
   const [selectedStation, setSelectedStation] = useState<Station | null>(null);
+  const [highlightedStation, setHighlightedStation] = useState<Station | null>(null); 
+  const [selectedStationVersion, setSelectedStationVersion] = useState(0);
 
   const [userLocation, setUserLocation] = useState<{
     lat: number;
@@ -63,7 +65,11 @@ export default function MapScreen() {
 
   return (
     <View style={styles.container}>
-      <GasMap selectedStation={selectedStation} />
+      <GasMap
+        selectedStation={selectedStation}
+        highlightedStation={highlightedStation}
+        selectedStationVersion={selectedStationVersion}
+/>
 
       <View style={styles.overlay}>
         <FilterBar />
@@ -73,7 +79,12 @@ export default function MapScreen() {
 
       <Pressable
         style={styles.bottomSheet}
-        onPress={() => setSelectedStation(cheapestStation)}
+        onPress={() => {
+          setSelectedStation(cheapestStation);
+          setSelectedStationVersion((current) => current + 1);
+        }}
+        onHoverIn={() => setHighlightedStation(cheapestStation)}
+        onHoverOut={() => setHighlightedStation(null)}
       >
         <StationCard
           name={cheapestStation.name}

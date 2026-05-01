@@ -34,15 +34,22 @@ function formatPrices(prices: {
 }
 
 type Station = {
+  id: string;
   lat: number;
   lng: number;
 };
 
 type Props = {
   selectedStation: Station | null;
+  highlightedStation: Station | null;
+  selectedStationVersion: number;
 };
 
-export default function GasMap({ selectedStation }: Props) {
+export default function GasMap({
+  selectedStation,
+  highlightedStation,
+  selectedStationVersion,
+}: Props) {
   const [region, setRegion] = useState<Region | null>(null);
   const [zip, setZip] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -50,14 +57,14 @@ export default function GasMap({ selectedStation }: Props) {
   useEffect(() => {
     async function getLocation() {
       const { status } = await Location.requestForegroundPermissionsAsync();
-
+  
       if (status !== "granted") {
         setErrorMsg("Location permission denied.");
         return;
       }
-
+  
       const location = await Location.getCurrentPositionAsync({});
-
+  
       setRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -65,20 +72,20 @@ export default function GasMap({ selectedStation }: Props) {
         longitudeDelta: 0.03,
       });
     }
-
-    useEffect(() => {
-      if (!selectedStation) return;
-    
-      setRegion({
-        latitude: selectedStation.lat,
-        longitude: selectedStation.lng,
-        latitudeDelta: 0.02,
-        longitudeDelta: 0.02,
-      });
-    }, [selectedStation]);
-
+  
     getLocation();
   }, []);
+  
+  useEffect(() => {
+    if (!selectedStation) return;
+  
+    setRegion({
+      latitude: selectedStation.lat,
+      longitude: selectedStation.lng,
+      latitudeDelta: 0.02,
+      longitudeDelta: 0.02,
+    });
+  }, [selectedStation, selectedStationVersion]);
 
   async function searchZip() {
     if (!zip.trim()) return;
@@ -161,18 +168,22 @@ export default function GasMap({ selectedStation }: Props) {
           title="Selected area"
           description={zip ? `ZIP: ${zip}` : "Your current location"}
         />
-        {stations.map((station) => (
-          <Marker
-          key={station.id}
-          pinColor="#2563eb"
-          coordinate={{
-            latitude: station.lat,
-            longitude: station.lng,
-          }}
-          title={station.name}
-          description={formatPrices(station.prices)}
-          />
-        ))}
+        {stations.map((station) => {
+          const isHighlighted = highlightedStation?.id === station.id;
+
+          return (
+            <Marker
+              key={`${station.id}-${isHighlighted ? "highlighted" : "normal"}`}
+              coordinate={{
+                latitude: station.lat,
+                longitude: station.lng,
+              }}
+              pinColor={isHighlighted ? "#f97316" : "#2563eb"}
+              title={station.name}
+              description={formatPrices(station.prices)}
+            />
+          );
+        })}
       </MapView>
     </View>
   );
