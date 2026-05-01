@@ -1,662 +1,1862 @@
 [
     {
-        "id": "1",
-        "name": "Shell - N Mesa St",
-        "lat": 31.7765,
-        "lng": -106.5012,
-        "prices": {
-            "regular_petrol": 3.15,
-            "diesel": 3.85,
-            "electric_kwh": 0.48
-        },
-        "address": "2301 N Mesa St, El Paso, TX 79902"
+      "id": "1",
+      "name": "Shell - N Mesa St",
+      "lat": 31.7765,
+      "lng": -106.5012,
+      "prices": {
+        "regular_petrol": 3.15,
+        "diesel": 3.85,
+        "electric_kwh": 0.48
+      },
+      "address": "2301 N Mesa St, El Paso, TX 79902"
     },
     {
-        "id": "2",
-        "name": "Exxon - University Ave",
-        "lat": 31.7721,
-        "lng": -106.5045,
-        "prices": {
-            "regular_petrol": 3.09,
-            "diesel": 3.79,
-            "electric_kwh": null
-        },
-        "address": "1900 N Mesa St, El Paso, TX 79902"
+      "id": "2",
+      "name": "Exxon - University Ave",
+      "lat": 31.7721,
+      "lng": -106.5045,
+      "prices": {
+        "regular_petrol": 3.09,
+        "diesel": 3.79,
+        "electric_kwh": null
+      },
+      "address": "1900 N Mesa St, El Paso, TX 79902"
     },
     {
-        "id": "3",
-        "name": "Chevron - Sunland Park",
-        "lat": 31.8115,
-        "lng": -106.5412,
-        "prices": {
-            "regular_petrol": 3.25,
-            "diesel": 3.95,
-            "electric_kwh": 0.52
-        },
-        "address": "700 Sunland Park Dr, El Paso, TX 79912"
+      "id": "3",
+      "name": "Chevron - Sunland Park",
+      "lat": 31.8115,
+      "lng": -106.5412,
+      "prices": {
+        "regular_petrol": 3.25,
+        "diesel": 3.95,
+        "electric_kwh": 0.52
+      },
+      "address": "700 Sunland Park Dr, El Paso, TX 79912"
     },
     {
-        "id": "4",
-        "name": "7-Eleven / Alon",
-        "lat": 31.768,
-        "lng": -106.495,
-        "prices": {
-            "regular_petrol": 3.05,
-            "diesel": null,
-            "electric_kwh": null
-        },
-        "address": "1201 N Mesa St, El Paso, TX 79902"
+      "id": "4",
+      "name": "7-Eleven / Alon",
+      "lat": 31.768,
+      "lng": -106.495,
+      "prices": {
+        "regular_petrol": 3.05,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "1201 N Mesa St, El Paso, TX 79902"
     },
     {
-        "id": "5",
-        "name": "ChargePoint Station (EV Only)",
-        "lat": 31.7705,
-        "lng": -106.503,
-        "prices": {
-            "regular_petrol": null,
-            "diesel": null,
-            "electric_kwh": 0.35
-        },
-        "address": "UTEP Campus, El Paso, TX 79968"
+      "id": "5",
+      "name": "ChargePoint Station (EV Only)",
+      "lat": 31.7705,
+      "lng": -106.503,
+      "prices": {
+        "regular_petrol": null,
+        "diesel": null,
+        "electric_kwh": 0.35
+      },
+      "address": "UTEP Campus, El Paso, TX 79968"
     },
     {
-        "id": "6",
-        "name": "Circle K - Downtown El Paso",
-        "lat": 31.7587,
-        "lng": -106.4869,
-        "prices": {
-            "regular_petrol": 3.13,
-            "diesel": 3.87,
-            "electric_kwh": null
-        },
-        "address": "Downtown, El Paso, TX 79901"
+      "id": "6",
+      "name": "Circle K - Downtown El Paso",
+      "lat": 31.7587,
+      "lng": -106.4869,
+      "prices": {
+        "regular_petrol": 3.13,
+        "diesel": 3.87,
+        "electric_kwh": null
+      },
+      "address": "Downtown, El Paso, TX 79901"
     },
     {
-        "id": "7",
-        "name": "Valero - Paisano Dr",
-        "lat": 31.757,
-        "lng": -106.4776,
-        "prices": {
-            "regular_petrol": 3.15,
-            "diesel": 3.91,
-            "electric_kwh": null
-        },
-        "address": "E Paisano Dr, El Paso, TX 79901"
+      "id": "7",
+      "name": "Valero - Paisano Dr",
+      "lat": 31.757,
+      "lng": -106.4776,
+      "prices": {
+        "regular_petrol": 3.15,
+        "diesel": 3.91,
+        "electric_kwh": null
+      },
+      "address": "E Paisano Dr, El Paso, TX 79901"
     },
     {
-        "id": "8",
-        "name": "Chevron - Montana Ave",
-        "lat": 31.7798,
-        "lng": -106.4552,
-        "prices": {
-            "regular_petrol": 3.17,
-            "diesel": null,
-            "electric_kwh": null
-        },
-        "address": "Montana Ave, El Paso, TX 79903"
+      "id": "8",
+      "name": "Chevron - Montana Ave",
+      "lat": 31.7798,
+      "lng": -106.4552,
+      "prices": {
+        "regular_petrol": 3.17,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "Montana Ave, El Paso, TX 79903"
     },
     {
-        "id": "9",
-        "name": "Shell - Five Points",
-        "lat": 31.7782,
-        "lng": -106.4598,
-        "prices": {
-            "regular_petrol": 3.19,
-            "diesel": 3.99,
-            "electric_kwh": null
-        },
-        "address": "Five Points, El Paso, TX 79903"
+      "id": "9",
+      "name": "Shell - Five Points",
+      "lat": 31.7782,
+      "lng": -106.4598,
+      "prices": {
+        "regular_petrol": 3.19,
+        "diesel": 3.99,
+        "electric_kwh": null
+      },
+      "address": "Five Points, El Paso, TX 79903"
     },
     {
-        "id": "10",
-        "name": "Exxon - Alameda Ave",
-        "lat": 31.7664,
-        "lng": -106.456,
-        "prices": {
-            "regular_petrol": 3.21,
-            "diesel": 3.63,
-            "electric_kwh": null
-        },
-        "address": "Alameda Ave, El Paso, TX 79905"
+      "id": "10",
+      "name": "Exxon - Alameda Ave",
+      "lat": 31.7664,
+      "lng": -106.456,
+      "prices": {
+        "regular_petrol": 3.21,
+        "diesel": 3.63,
+        "electric_kwh": null
+      },
+      "address": "Alameda Ave, El Paso, TX 79905"
     },
     {
-        "id": "11",
-        "name": "Circle K - Copia St",
-        "lat": 31.7829,
-        "lng": -106.4425,
-        "prices": {
-            "regular_petrol": 3.23,
-            "diesel": 3.67,
-            "electric_kwh": 0.41
-        },
-        "address": "N Copia St, El Paso, TX 79903"
+      "id": "11",
+      "name": "Circle K - Copia St",
+      "lat": 31.7829,
+      "lng": -106.4425,
+      "prices": {
+        "regular_petrol": 3.23,
+        "diesel": 3.67,
+        "electric_kwh": 0.41
+      },
+      "address": "N Copia St, El Paso, TX 79903"
     },
     {
-        "id": "12",
-        "name": "Valero - Fort Bliss Area",
-        "lat": 31.8011,
-        "lng": -106.4276,
-        "prices": {
-            "regular_petrol": 3.25,
-            "diesel": null,
-            "electric_kwh": null
-        },
-        "address": "Fort Bliss Area, El Paso, TX 79906"
+      "id": "12",
+      "name": "Valero - Fort Bliss Area",
+      "lat": 31.8011,
+      "lng": -106.4276,
+      "prices": {
+        "regular_petrol": 3.25,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "Fort Bliss Area, El Paso, TX 79906"
     },
     {
-        "id": "13",
-        "name": "Shell - Airport Rd",
-        "lat": 31.7927,
-        "lng": -106.3975,
-        "prices": {
-            "regular_petrol": 3.27,
-            "diesel": 3.75,
-            "electric_kwh": null
-        },
-        "address": "Airport Rd, El Paso, TX 79925"
+      "id": "13",
+      "name": "Shell - Airport Rd",
+      "lat": 31.7927,
+      "lng": -106.3975,
+      "prices": {
+        "regular_petrol": 3.27,
+        "diesel": 3.75,
+        "electric_kwh": null
+      },
+      "address": "Airport Rd, El Paso, TX 79925"
     },
     {
-        "id": "14",
-        "name": "Chevron - Cielo Vista",
-        "lat": 31.7816,
-        "lng": -106.3823,
-        "prices": {
-            "regular_petrol": 3.29,
-            "diesel": 3.79,
-            "electric_kwh": null
-        },
-        "address": "Cielo Vista, El Paso, TX 79925"
+      "id": "14",
+      "name": "Chevron - Cielo Vista",
+      "lat": 31.7816,
+      "lng": -106.3823,
+      "prices": {
+        "regular_petrol": 3.29,
+        "diesel": 3.79,
+        "electric_kwh": null
+      },
+      "address": "Cielo Vista, El Paso, TX 79925"
     },
     {
-        "id": "15",
-        "name": "Murphy USA - Gateway East",
-        "lat": 31.7731,
-        "lng": -106.3707,
-        "prices": {
-            "regular_petrol": 3.01,
-            "diesel": 3.83,
-            "electric_kwh": null
-        },
-        "address": "Gateway Blvd E, El Paso, TX 79915"
+      "id": "15",
+      "name": "Murphy USA - Gateway East",
+      "lat": 31.7731,
+      "lng": -106.3707,
+      "prices": {
+        "regular_petrol": 3.01,
+        "diesel": 3.83,
+        "electric_kwh": null
+      },
+      "address": "Gateway Blvd E, El Paso, TX 79915"
     },
     {
-        "id": "16",
-        "name": "Speedway - Trowbridge Dr",
-        "lat": 31.7821,
-        "lng": -106.4202,
-        "prices": {
-            "regular_petrol": 3.03,
-            "diesel": null,
-            "electric_kwh": null
-        },
-        "address": "Trowbridge Dr, El Paso, TX 79903"
+      "id": "16",
+      "name": "Speedway - Trowbridge Dr",
+      "lat": 31.7821,
+      "lng": -106.4202,
+      "prices": {
+        "regular_petrol": 3.03,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "Trowbridge Dr, El Paso, TX 79903"
     },
     {
-        "id": "17",
-        "name": "Valero - Yarbrough Dr",
-        "lat": 31.7558,
-        "lng": -106.3435,
-        "prices": {
-            "regular_petrol": 3.05,
-            "diesel": 3.91,
-            "electric_kwh": null
-        },
-        "address": "Yarbrough Dr, El Paso, TX 79915"
+      "id": "17",
+      "name": "Valero - Yarbrough Dr",
+      "lat": 31.7558,
+      "lng": -106.3435,
+      "prices": {
+        "regular_petrol": 3.05,
+        "diesel": 3.91,
+        "electric_kwh": null
+      },
+      "address": "Yarbrough Dr, El Paso, TX 79915"
     },
     {
-        "id": "18",
-        "name": "Circle K - Lee Trevino Dr",
-        "lat": 31.7478,
-        "lng": -106.3216,
-        "prices": {
-            "regular_petrol": 3.07,
-            "diesel": 3.95,
-            "electric_kwh": null
-        },
-        "address": "Lee Trevino Dr, El Paso, TX 79936"
+      "id": "18",
+      "name": "Circle K - Lee Trevino Dr",
+      "lat": 31.7478,
+      "lng": -106.3216,
+      "prices": {
+        "regular_petrol": 3.07,
+        "diesel": 3.95,
+        "electric_kwh": null
+      },
+      "address": "Lee Trevino Dr, El Paso, TX 79936"
     },
     {
-        "id": "19",
-        "name": "Exxon - Montwood Dr",
-        "lat": 31.7683,
-        "lng": -106.316,
-        "prices": {
-            "regular_petrol": 3.09,
-            "diesel": 3.99,
-            "electric_kwh": null
-        },
-        "address": "Montwood Dr, El Paso, TX 79936"
+      "id": "19",
+      "name": "Exxon - Montwood Dr",
+      "lat": 31.7683,
+      "lng": -106.316,
+      "prices": {
+        "regular_petrol": 3.09,
+        "diesel": 3.99,
+        "electric_kwh": null
+      },
+      "address": "Montwood Dr, El Paso, TX 79936"
     },
     {
-        "id": "20",
-        "name": "Shell - George Dieter Dr",
-        "lat": 31.7698,
-        "lng": -106.3022,
-        "prices": {
-            "regular_petrol": 3.11,
-            "diesel": null,
-            "electric_kwh": null
-        },
-        "address": "George Dieter Dr, El Paso, TX 79936"
+      "id": "20",
+      "name": "Shell - George Dieter Dr",
+      "lat": 31.7698,
+      "lng": -106.3022,
+      "prices": {
+        "regular_petrol": 3.11,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "George Dieter Dr, El Paso, TX 79936"
     },
     {
-        "id": "21",
-        "name": "Chevron - Pebble Hills Blvd",
-        "lat": 31.7898,
-        "lng": -106.3067,
-        "prices": {
-            "regular_petrol": 3.13,
-            "diesel": 3.67,
-            "electric_kwh": null
-        },
-        "address": "Pebble Hills Blvd, El Paso, TX 79936"
+      "id": "21",
+      "name": "Chevron - Pebble Hills Blvd",
+      "lat": 31.7898,
+      "lng": -106.3067,
+      "prices": {
+        "regular_petrol": 3.13,
+        "diesel": 3.67,
+        "electric_kwh": null
+      },
+      "address": "Pebble Hills Blvd, El Paso, TX 79936"
     },
     {
-        "id": "22",
-        "name": "Valero - Zaragoza Rd",
-        "lat": 31.7344,
-        "lng": -106.2951,
-        "prices": {
-            "regular_petrol": 3.15,
-            "diesel": 3.71,
-            "electric_kwh": 0.5
-        },
-        "address": "N Zaragoza Rd, El Paso, TX 79936"
+      "id": "22",
+      "name": "Valero - Zaragoza Rd",
+      "lat": 31.7344,
+      "lng": -106.2951,
+      "prices": {
+        "regular_petrol": 3.15,
+        "diesel": 3.71,
+        "electric_kwh": 0.5
+      },
+      "address": "N Zaragoza Rd, El Paso, TX 79936"
     },
     {
-        "id": "23",
-        "name": "Circle K - Vista Del Sol",
-        "lat": 31.7501,
-        "lng": -106.2921,
-        "prices": {
-            "regular_petrol": 3.17,
-            "diesel": 3.75,
-            "electric_kwh": null
-        },
-        "address": "Vista Del Sol Dr, El Paso, TX 79936"
+      "id": "23",
+      "name": "Circle K - Vista Del Sol",
+      "lat": 31.7501,
+      "lng": -106.2921,
+      "prices": {
+        "regular_petrol": 3.17,
+        "diesel": 3.75,
+        "electric_kwh": null
+      },
+      "address": "Vista Del Sol Dr, El Paso, TX 79936"
     },
     {
-        "id": "24",
-        "name": "Exxon - Saul Kleinfeld Dr",
-        "lat": 31.7844,
-        "lng": -106.2776,
-        "prices": {
-            "regular_petrol": 3.19,
-            "diesel": null,
-            "electric_kwh": null
-        },
-        "address": "Saul Kleinfeld Dr, El Paso, TX 79936"
+      "id": "24",
+      "name": "Exxon - Saul Kleinfeld Dr",
+      "lat": 31.7844,
+      "lng": -106.2776,
+      "prices": {
+        "regular_petrol": 3.19,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "Saul Kleinfeld Dr, El Paso, TX 79936"
     },
     {
-        "id": "25",
-        "name": "Shell - Edgemere Blvd",
-        "lat": 31.7878,
-        "lng": -106.2688,
-        "prices": {
-            "regular_petrol": 3.21,
-            "diesel": 3.83,
-            "electric_kwh": null
-        },
-        "address": "Edgemere Blvd, El Paso, TX 79938"
+      "id": "25",
+      "name": "Shell - Edgemere Blvd",
+      "lat": 31.7878,
+      "lng": -106.2688,
+      "prices": {
+        "regular_petrol": 3.21,
+        "diesel": 3.83,
+        "electric_kwh": null
+      },
+      "address": "Edgemere Blvd, El Paso, TX 79938"
     },
     {
-        "id": "26",
-        "name": "Valero - Tierra Este",
-        "lat": 31.7935,
-        "lng": -106.2549,
-        "prices": {
-            "regular_petrol": 3.23,
-            "diesel": 3.87,
-            "electric_kwh": null
-        },
-        "address": "Tierra Este Rd, El Paso, TX 79938"
+      "id": "26",
+      "name": "Valero - Tierra Este",
+      "lat": 31.7935,
+      "lng": -106.2549,
+      "prices": {
+        "regular_petrol": 3.23,
+        "diesel": 3.87,
+        "electric_kwh": null
+      },
+      "address": "Tierra Este Rd, El Paso, TX 79938"
     },
     {
-        "id": "27",
-        "name": "Circle K - Joe Battle Blvd",
-        "lat": 31.8079,
-        "lng": -106.2553,
-        "prices": {
-            "regular_petrol": 3.25,
-            "diesel": 3.91,
-            "electric_kwh": null
-        },
-        "address": "Joe Battle Blvd, El Paso, TX 79938"
+      "id": "27",
+      "name": "Circle K - Joe Battle Blvd",
+      "lat": 31.8079,
+      "lng": -106.2553,
+      "prices": {
+        "regular_petrol": 3.25,
+        "diesel": 3.91,
+        "electric_kwh": null
+      },
+      "address": "Joe Battle Blvd, El Paso, TX 79938"
     },
     {
-        "id": "28",
-        "name": "Chevron - Eastlake Blvd",
-        "lat": 31.7442,
-        "lng": -106.2405,
-        "prices": {
-            "regular_petrol": 3.27,
-            "diesel": null,
-            "electric_kwh": null
-        },
-        "address": "Eastlake Blvd, El Paso, TX 79928"
+      "id": "28",
+      "name": "Chevron - Eastlake Blvd",
+      "lat": 31.7442,
+      "lng": -106.2405,
+      "prices": {
+        "regular_petrol": 3.27,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "Eastlake Blvd, El Paso, TX 79928"
     },
     {
-        "id": "29",
-        "name": "Shell - Horizon Blvd",
-        "lat": 31.6814,
-        "lng": -106.2065,
-        "prices": {
-            "regular_petrol": 3.29,
-            "diesel": 3.99,
-            "electric_kwh": null
-        },
-        "address": "Horizon Blvd, El Paso, TX 79928"
+      "id": "29",
+      "name": "Shell - Horizon Blvd",
+      "lat": 31.6814,
+      "lng": -106.2065,
+      "prices": {
+        "regular_petrol": 3.29,
+        "diesel": 3.99,
+        "electric_kwh": null
+      },
+      "address": "Horizon Blvd, El Paso, TX 79928"
     },
     {
-        "id": "30",
-        "name": "Valero - Socorro Rd",
-        "lat": 31.6546,
-        "lng": -106.3031,
-        "prices": {
-            "regular_petrol": 3.01,
-            "diesel": 3.63,
-            "electric_kwh": null
-        },
-        "address": "Socorro Rd, El Paso, TX 79927"
+      "id": "30",
+      "name": "Valero - Socorro Rd",
+      "lat": 31.6546,
+      "lng": -106.3031,
+      "prices": {
+        "regular_petrol": 3.01,
+        "diesel": 3.63,
+        "electric_kwh": null
+      },
+      "address": "Socorro Rd, El Paso, TX 79927"
     },
     {
-        "id": "31",
-        "name": "Circle K - North Loop Dr",
-        "lat": 31.6964,
-        "lng": -106.3317,
-        "prices": {
-            "regular_petrol": 3.03,
-            "diesel": 3.67,
-            "electric_kwh": null
-        },
-        "address": "North Loop Dr, El Paso, TX 79907"
+      "id": "31",
+      "name": "Circle K - North Loop Dr",
+      "lat": 31.6964,
+      "lng": -106.3317,
+      "prices": {
+        "regular_petrol": 3.03,
+        "diesel": 3.67,
+        "electric_kwh": null
+      },
+      "address": "North Loop Dr, El Paso, TX 79907"
     },
     {
-        "id": "32",
-        "name": "Exxon - Americas Ave",
-        "lat": 31.6952,
-        "lng": -106.2849,
-        "prices": {
-            "regular_petrol": 3.05,
-            "diesel": null,
-            "electric_kwh": null
-        },
-        "address": "Americas Ave, El Paso, TX 79907"
+      "id": "32",
+      "name": "Exxon - Americas Ave",
+      "lat": 31.6952,
+      "lng": -106.2849,
+      "prices": {
+        "regular_petrol": 3.05,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "Americas Ave, El Paso, TX 79907"
     },
     {
-        "id": "33",
-        "name": "Chevron - Ysleta",
-        "lat": 31.6886,
-        "lng": -106.3296,
-        "prices": {
-            "regular_petrol": 3.07,
-            "diesel": 3.75,
-            "electric_kwh": 0.35
-        },
-        "address": "Ysleta, El Paso, TX 79907"
+      "id": "33",
+      "name": "Chevron - Ysleta",
+      "lat": 31.6886,
+      "lng": -106.3296,
+      "prices": {
+        "regular_petrol": 3.07,
+        "diesel": 3.75,
+        "electric_kwh": 0.35
+      },
+      "address": "Ysleta, El Paso, TX 79907"
     },
     {
-        "id": "34",
-        "name": "Shell - Lower Valley",
-        "lat": 31.7122,
-        "lng": -106.3556,
-        "prices": {
-            "regular_petrol": 3.09,
-            "diesel": 3.79,
-            "electric_kwh": null
-        },
-        "address": "Lower Valley, El Paso, TX 79907"
+      "id": "34",
+      "name": "Shell - Lower Valley",
+      "lat": 31.7122,
+      "lng": -106.3556,
+      "prices": {
+        "regular_petrol": 3.09,
+        "diesel": 3.79,
+        "electric_kwh": null
+      },
+      "address": "Lower Valley, El Paso, TX 79907"
     },
     {
-        "id": "35",
-        "name": "Valero - Border Hwy",
-        "lat": 31.7237,
-        "lng": -106.3704,
-        "prices": {
-            "regular_petrol": 3.11,
-            "diesel": 3.83,
-            "electric_kwh": null
-        },
-        "address": "Border Hwy, El Paso, TX 79915"
+      "id": "35",
+      "name": "Valero - Border Hwy",
+      "lat": 31.7237,
+      "lng": -106.3704,
+      "prices": {
+        "regular_petrol": 3.11,
+        "diesel": 3.83,
+        "electric_kwh": null
+      },
+      "address": "Border Hwy, El Paso, TX 79915"
     },
     {
-        "id": "36",
-        "name": "Circle K - Doniphan Dr",
-        "lat": 31.8332,
-        "lng": -106.5672,
-        "prices": {
-            "regular_petrol": 3.13,
-            "diesel": null,
-            "electric_kwh": null
-        },
-        "address": "Doniphan Dr, El Paso, TX 79922"
+      "id": "36",
+      "name": "Circle K - Doniphan Dr",
+      "lat": 31.8332,
+      "lng": -106.5672,
+      "prices": {
+        "regular_petrol": 3.13,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "Doniphan Dr, El Paso, TX 79922"
     },
     {
-        "id": "37",
-        "name": "Chevron - Westwind Dr",
-        "lat": 31.836,
-        "lng": -106.5565,
-        "prices": {
-            "regular_petrol": 3.15,
-            "diesel": 3.91,
-            "electric_kwh": null
-        },
-        "address": "Westwind Dr, El Paso, TX 79912"
+      "id": "37",
+      "name": "Chevron - Westwind Dr",
+      "lat": 31.836,
+      "lng": -106.5565,
+      "prices": {
+        "regular_petrol": 3.15,
+        "diesel": 3.91,
+        "electric_kwh": null
+      },
+      "address": "Westwind Dr, El Paso, TX 79912"
     },
     {
-        "id": "38",
-        "name": "Shell - Redd Rd",
-        "lat": 31.8615,
-        "lng": -106.5599,
-        "prices": {
-            "regular_petrol": 3.17,
-            "diesel": 3.95,
-            "electric_kwh": null
-        },
-        "address": "Redd Rd, El Paso, TX 79912"
+      "id": "38",
+      "name": "Shell - Redd Rd",
+      "lat": 31.8615,
+      "lng": -106.5599,
+      "prices": {
+        "regular_petrol": 3.17,
+        "diesel": 3.95,
+        "electric_kwh": null
+      },
+      "address": "Redd Rd, El Paso, TX 79912"
     },
     {
-        "id": "39",
-        "name": "Exxon - Resler Dr",
-        "lat": 31.8501,
-        "lng": -106.5482,
-        "prices": {
-            "regular_petrol": 3.19,
-            "diesel": 3.99,
-            "electric_kwh": null
-        },
-        "address": "Resler Dr, El Paso, TX 79912"
+      "id": "39",
+      "name": "Exxon - Resler Dr",
+      "lat": 31.8501,
+      "lng": -106.5482,
+      "prices": {
+        "regular_petrol": 3.19,
+        "diesel": 3.99,
+        "electric_kwh": null
+      },
+      "address": "Resler Dr, El Paso, TX 79912"
     },
     {
-        "id": "40",
-        "name": "Valero - Mesa Hills Dr",
-        "lat": 31.8167,
-        "lng": -106.5331,
-        "prices": {
-            "regular_petrol": 3.21,
-            "diesel": null,
-            "electric_kwh": null
-        },
-        "address": "Mesa Hills Dr, El Paso, TX 79912"
+      "id": "40",
+      "name": "Valero - Mesa Hills Dr",
+      "lat": 31.8167,
+      "lng": -106.5331,
+      "prices": {
+        "regular_petrol": 3.21,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "Mesa Hills Dr, El Paso, TX 79912"
     },
     {
-        "id": "41",
-        "name": "Circle K - Mesa St West",
-        "lat": 31.8293,
-        "lng": -106.5285,
-        "prices": {
-            "regular_petrol": 3.23,
-            "diesel": 3.67,
-            "electric_kwh": null
-        },
-        "address": "N Mesa St, El Paso, TX 79912"
+      "id": "41",
+      "name": "Circle K - Mesa St West",
+      "lat": 31.8293,
+      "lng": -106.5285,
+      "prices": {
+        "regular_petrol": 3.23,
+        "diesel": 3.67,
+        "electric_kwh": null
+      },
+      "address": "N Mesa St, El Paso, TX 79912"
     },
     {
-        "id": "42",
-        "name": "Chevron - Transmountain Rd",
-        "lat": 31.8991,
-        "lng": -106.439,
-        "prices": {
-            "regular_petrol": 3.25,
-            "diesel": 3.71,
-            "electric_kwh": null
-        },
-        "address": "Transmountain Rd, El Paso, TX 79924"
+      "id": "42",
+      "name": "Chevron - Transmountain Rd",
+      "lat": 31.8991,
+      "lng": -106.439,
+      "prices": {
+        "regular_petrol": 3.25,
+        "diesel": 3.71,
+        "electric_kwh": null
+      },
+      "address": "Transmountain Rd, El Paso, TX 79924"
     },
     {
-        "id": "43",
-        "name": "Shell - Dyer St",
-        "lat": 31.862,
-        "lng": -106.4293,
-        "prices": {
-            "regular_petrol": 3.27,
-            "diesel": 3.75,
-            "electric_kwh": null
-        },
-        "address": "Dyer St, El Paso, TX 79904"
+      "id": "43",
+      "name": "Shell - Dyer St",
+      "lat": 31.862,
+      "lng": -106.4293,
+      "prices": {
+        "regular_petrol": 3.27,
+        "diesel": 3.75,
+        "electric_kwh": null
+      },
+      "address": "Dyer St, El Paso, TX 79904"
     },
     {
-        "id": "44",
-        "name": "Valero - Hondo Pass Dr",
-        "lat": 31.8499,
-        "lng": -106.4246,
-        "prices": {
-            "regular_petrol": 3.29,
-            "diesel": null,
-            "electric_kwh": 0.44
-        },
-        "address": "Hondo Pass Dr, El Paso, TX 79904"
+      "id": "44",
+      "name": "Valero - Hondo Pass Dr",
+      "lat": 31.8499,
+      "lng": -106.4246,
+      "prices": {
+        "regular_petrol": 3.29,
+        "diesel": null,
+        "electric_kwh": 0.44
+      },
+      "address": "Hondo Pass Dr, El Paso, TX 79904"
     },
     {
-        "id": "45",
-        "name": "Circle K - Railroad Dr",
-        "lat": 31.8745,
-        "lng": -106.3984,
-        "prices": {
-            "regular_petrol": 3.01,
-            "diesel": 3.83,
-            "electric_kwh": null
-        },
-        "address": "Railroad Dr, El Paso, TX 79924"
+      "id": "45",
+      "name": "Circle K - Railroad Dr",
+      "lat": 31.8745,
+      "lng": -106.3984,
+      "prices": {
+        "regular_petrol": 3.01,
+        "diesel": 3.83,
+        "electric_kwh": null
+      },
+      "address": "Railroad Dr, El Paso, TX 79924"
     },
     {
-        "id": "46",
-        "name": "Exxon - McCombs St",
-        "lat": 31.9051,
-        "lng": -106.4046,
-        "prices": {
-            "regular_petrol": 3.03,
-            "diesel": 3.87,
-            "electric_kwh": null
-        },
-        "address": "McCombs St, El Paso, TX 79924"
+      "id": "46",
+      "name": "Exxon - McCombs St",
+      "lat": 31.9051,
+      "lng": -106.4046,
+      "prices": {
+        "regular_petrol": 3.03,
+        "diesel": 3.87,
+        "electric_kwh": null
+      },
+      "address": "McCombs St, El Paso, TX 79924"
     },
     {
-        "id": "47",
-        "name": "Shell - Patriot Fwy",
-        "lat": 31.8306,
-        "lng": -106.4398,
-        "prices": {
-            "regular_petrol": 3.05,
-            "diesel": 3.91,
-            "electric_kwh": null
-        },
-        "address": "Patriot Fwy, El Paso, TX 79904"
+      "id": "47",
+      "name": "Shell - Patriot Fwy",
+      "lat": 31.8306,
+      "lng": -106.4398,
+      "prices": {
+        "regular_petrol": 3.05,
+        "diesel": 3.91,
+        "electric_kwh": null
+      },
+      "address": "Patriot Fwy, El Paso, TX 79904"
     },
     {
-        "id": "48",
-        "name": "Chevron - Fred Wilson Ave",
-        "lat": 31.8083,
-        "lng": -106.4389,
-        "prices": {
-            "regular_petrol": 3.07,
-            "diesel": null,
-            "electric_kwh": null
-        },
-        "address": "Fred Wilson Ave, El Paso, TX 79906"
+      "id": "48",
+      "name": "Chevron - Fred Wilson Ave",
+      "lat": 31.8083,
+      "lng": -106.4389,
+      "prices": {
+        "regular_petrol": 3.07,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "Fred Wilson Ave, El Paso, TX 79906"
     },
     {
-        "id": "49",
-        "name": "EVgo - Downtown EV Station",
-        "lat": 31.7598,
-        "lng": -106.4896,
-        "prices": {
-            "regular_petrol": null,
-            "diesel": null,
-            "electric_kwh": 0.35
-        },
-        "address": "Downtown Parking Area, El Paso, TX 79901"
+      "id": "49",
+      "name": "EVgo - Downtown EV Station",
+      "lat": 31.7598,
+      "lng": -106.4896,
+      "prices": {
+        "regular_petrol": null,
+        "diesel": null,
+        "electric_kwh": 0.35
+      },
+      "address": "Downtown Parking Area, El Paso, TX 79901"
     },
     {
-        "id": "50",
-        "name": "ChargePoint - Cielo Vista EV",
-        "lat": 31.7775,
-        "lng": -106.3854,
-        "prices": {
-            "regular_petrol": null,
-            "diesel": null,
-            "electric_kwh": 0.38
-        },
-        "address": "Cielo Vista Mall Area, El Paso, TX 79925"
+      "id": "50",
+      "name": "ChargePoint - Cielo Vista EV",
+      "lat": 31.7775,
+      "lng": -106.3854,
+      "prices": {
+        "regular_petrol": null,
+        "diesel": null,
+        "electric_kwh": 0.38
+      },
+      "address": "Cielo Vista Mall Area, El Paso, TX 79925"
     },
     {
-        "id": "51",
-        "name": "ChargePoint - Westside EV",
-        "lat": 31.841,
-        "lng": -106.5458,
-        "prices": {
-            "regular_petrol": null,
-            "diesel": null,
-            "electric_kwh": 0.41
-        },
-        "address": "Westside Shopping Area, El Paso, TX 79912"
+      "id": "51",
+      "name": "ChargePoint - Westside EV",
+      "lat": 31.841,
+      "lng": -106.5458,
+      "prices": {
+        "regular_petrol": null,
+        "diesel": null,
+        "electric_kwh": 0.41
+      },
+      "address": "Westside Shopping Area, El Paso, TX 79912"
     },
     {
-        "id": "52",
-        "name": "EVgo - Eastside EV Station",
-        "lat": 31.7707,
-        "lng": -106.3049,
-        "prices": {
-            "regular_petrol": null,
-            "diesel": null,
-            "electric_kwh": 0.44
-        },
-        "address": "East El Paso Shopping Area, El Paso, TX 79936"
+      "id": "52",
+      "name": "EVgo - Eastside EV Station",
+      "lat": 31.7707,
+      "lng": -106.3049,
+      "prices": {
+        "regular_petrol": null,
+        "diesel": null,
+        "electric_kwh": 0.44
+      },
+      "address": "East El Paso Shopping Area, El Paso, TX 79936"
     },
     {
-        "id": "53",
-        "name": "Blink Charging - Medical Center",
-        "lat": 31.7709,
-        "lng": -106.4337,
-        "prices": {
-            "regular_petrol": null,
-            "diesel": null,
-            "electric_kwh": 0.47
-        },
-        "address": "Medical Center Area, El Paso, TX 79905"
+      "id": "53",
+      "name": "Blink Charging - Medical Center",
+      "lat": 31.7709,
+      "lng": -106.4337,
+      "prices": {
+        "regular_petrol": null,
+        "diesel": null,
+        "electric_kwh": 0.47
+      },
+      "address": "Medical Center Area, El Paso, TX 79905"
     },
     {
-        "id": "54",
-        "name": "Shell - Executive Center Blvd",
-        "lat": 31.7977,
-        "lng": -106.5142,
-        "prices": {
-            "regular_petrol": 3.19,
-            "diesel": 3.79,
-            "electric_kwh": null
-        },
-        "address": "Executive Center Blvd, El Paso, TX 79902"
+      "id": "54",
+      "name": "Shell - Executive Center Blvd",
+      "lat": 31.7977,
+      "lng": -106.5142,
+      "prices": {
+        "regular_petrol": 3.19,
+        "diesel": 3.79,
+        "electric_kwh": null
+      },
+      "address": "Executive Center Blvd, El Paso, TX 79902"
     },
     {
-        "id": "55",
-        "name": "Valero - Mesa & Castellano",
-        "lat": 31.8199,
-        "lng": -106.5248,
-        "prices": {
-            "regular_petrol": 3.21,
-            "diesel": 3.83,
-            "electric_kwh": 0.53
-        },
-        "address": "Mesa St & Castellano Dr, El Paso, TX 79912"
+      "id": "55",
+      "name": "Valero - Mesa & Castellano",
+      "lat": 31.8199,
+      "lng": -106.5248,
+      "prices": {
+        "regular_petrol": 3.21,
+        "diesel": 3.83,
+        "electric_kwh": 0.53
+      },
+      "address": "Mesa St & Castellano Dr, El Paso, TX 79912"
+    },
+    {
+      "id": "56",
+      "name": "Valero - Station 56",
+      "lat": 31.883185,
+      "lng": -106.475258,
+      "prices": {
+        "regular_petrol": 3.11,
+        "diesel": 3.77,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79911"
+    },
+    {
+      "id": "57",
+      "name": "Exxon - Station 57",
+      "lat": 31.768437,
+      "lng": -106.504822,
+      "prices": {
+        "regular_petrol": 3.06,
+        "diesel": null,
+        "electric_kwh": 0.35
+      },
+      "address": "El Paso Area, TX 79935"
+    },
+    {
+      "id": "58",
+      "name": "Exxon - Station 58",
+      "lat": 31.886209,
+      "lng": -106.490186,
+      "prices": {
+        "regular_petrol": 3.21,
+        "diesel": 3.97,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79906"
+    },
+    {
+      "id": "59",
+      "name": "Shell - Station 59",
+      "lat": 31.771112,
+      "lng": -106.447473,
+      "prices": {
+        "regular_petrol": 3.08,
+        "diesel": 3.69,
+        "electric_kwh": 0.45
+      },
+      "address": "El Paso Area, TX 79919"
+    },
+    {
+      "id": "60",
+      "name": "Shell - Station 60",
+      "lat": 31.679489,
+      "lng": -106.573761,
+      "prices": {
+        "regular_petrol": 3.15,
+        "diesel": null,
+        "electric_kwh": 0.37
+      },
+      "address": "El Paso Area, TX 79929"
+    },
+    {
+      "id": "61",
+      "name": "Shell - Station 61",
+      "lat": 31.696401,
+      "lng": -106.235874,
+      "prices": {
+        "regular_petrol": 3.28,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79903"
+    },
+    {
+      "id": "62",
+      "name": "Exxon - Station 62",
+      "lat": 31.708535,
+      "lng": -106.402704,
+      "prices": {
+        "regular_petrol": 3.03,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79905"
+    },
+    {
+      "id": "63",
+      "name": "Circle K - Station 63",
+      "lat": 31.743428,
+      "lng": -106.332755,
+      "prices": {
+        "regular_petrol": 3.22,
+        "diesel": 3.92,
+        "electric_kwh": 0.37
+      },
+      "address": "El Paso Area, TX 79926"
+    },
+    {
+      "id": "64",
+      "name": "Circle K - Station 64",
+      "lat": 31.871064,
+      "lng": -106.245003,
+      "prices": {
+        "regular_petrol": 3.29,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79926"
+    },
+    {
+      "id": "65",
+      "name": "Valero - Station 65",
+      "lat": 31.768619,
+      "lng": -106.537364,
+      "prices": {
+        "regular_petrol": 3.07,
+        "diesel": 3.65,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79938"
+    },
+    {
+      "id": "66",
+      "name": "Exxon - Station 66",
+      "lat": 31.762086,
+      "lng": -106.508391,
+      "prices": {
+        "regular_petrol": 3.04,
+        "diesel": 3.85,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79903"
+    },
+    {
+      "id": "67",
+      "name": "Valero - Station 67",
+      "lat": 31.714901,
+      "lng": -106.379501,
+      "prices": {
+        "regular_petrol": 3.14,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79936"
+    },
+    {
+      "id": "68",
+      "name": "Shell - Station 68",
+      "lat": 31.764002,
+      "lng": -106.327735,
+      "prices": {
+        "regular_petrol": 3.28,
+        "diesel": 3.98,
+        "electric_kwh": 0.42
+      },
+      "address": "El Paso Area, TX 79933"
+    },
+    {
+      "id": "69",
+      "name": "Exxon - Station 69",
+      "lat": 31.749444,
+      "lng": -106.480962,
+      "prices": {
+        "regular_petrol": 3.23,
+        "diesel": 3.99,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79901"
+    },
+    {
+      "id": "70",
+      "name": "Valero - Station 70",
+      "lat": 31.864047,
+      "lng": -106.550808,
+      "prices": {
+        "regular_petrol": 3.28,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79936"
+    },
+    {
+      "id": "71",
+      "name": "Chevron - Station 71",
+      "lat": 31.741204,
+      "lng": -106.286965,
+      "prices": {
+        "regular_petrol": 3.04,
+        "diesel": 3.66,
+        "electric_kwh": 0.43
+      },
+      "address": "El Paso Area, TX 79910"
+    },
+    {
+      "id": "72",
+      "name": "Circle K - Station 72",
+      "lat": 31.676414,
+      "lng": -106.548426,
+      "prices": {
+        "regular_petrol": 3.29,
+        "diesel": null,
+        "electric_kwh": 0.42
+      },
+      "address": "El Paso Area, TX 79931"
+    },
+    {
+      "id": "73",
+      "name": "Exxon - Station 73",
+      "lat": 31.872611,
+      "lng": -106.39012,
+      "prices": {
+        "regular_petrol": 3.24,
+        "diesel": 3.94,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79931"
+    },
+    {
+      "id": "74",
+      "name": "Exxon - Station 74",
+      "lat": 31.82176,
+      "lng": -106.457873,
+      "prices": {
+        "regular_petrol": 3.03,
+        "diesel": 3.74,
+        "electric_kwh": 0.49
+      },
+      "address": "El Paso Area, TX 79905"
+    },
+    {
+      "id": "75",
+      "name": "Valero - Station 75",
+      "lat": 31.691878,
+      "lng": -106.318347,
+      "prices": {
+        "regular_petrol": 3.25,
+        "diesel": null,
+        "electric_kwh": 0.46
+      },
+      "address": "El Paso Area, TX 79901"
+    },
+    {
+      "id": "76",
+      "name": "Exxon - Station 76",
+      "lat": 31.868876,
+      "lng": -106.322671,
+      "prices": {
+        "regular_petrol": 3.0,
+        "diesel": 3.62,
+        "electric_kwh": 0.51
+      },
+      "address": "El Paso Area, TX 79928"
+    },
+    {
+      "id": "77",
+      "name": "Chevron - Station 77",
+      "lat": 31.725744,
+      "lng": -106.243221,
+      "prices": {
+        "regular_petrol": 3.07,
+        "diesel": 3.85,
+        "electric_kwh": 0.37
+      },
+      "address": "El Paso Area, TX 79937"
+    },
+    {
+      "id": "78",
+      "name": "Exxon - Station 78",
+      "lat": 31.722008,
+      "lng": -106.206734,
+      "prices": {
+        "regular_petrol": 3.01,
+        "diesel": 3.72,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79922"
+    },
+    {
+      "id": "79",
+      "name": "Chevron - Station 79",
+      "lat": 31.753524,
+      "lng": -106.484951,
+      "prices": {
+        "regular_petrol": 3.04,
+        "diesel": 3.69,
+        "electric_kwh": 0.49
+      },
+      "address": "El Paso Area, TX 79926"
+    },
+    {
+      "id": "80",
+      "name": "Chevron - Station 80",
+      "lat": 31.890433,
+      "lng": -106.340035,
+      "prices": {
+        "regular_petrol": 3.22,
+        "diesel": 3.77,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79928"
+    },
+    {
+      "id": "81",
+      "name": "Exxon - Station 81",
+      "lat": 31.650693,
+      "lng": -106.516521,
+      "prices": {
+        "regular_petrol": 3.06,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79914"
+    },
+    {
+      "id": "82",
+      "name": "Chevron - Station 82",
+      "lat": 31.7504,
+      "lng": -106.215693,
+      "prices": {
+        "regular_petrol": 3.23,
+        "diesel": 3.75,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79929"
+    },
+    {
+      "id": "83",
+      "name": "Shell - Station 83",
+      "lat": 31.795591,
+      "lng": -106.543714,
+      "prices": {
+        "regular_petrol": 3.16,
+        "diesel": 3.73,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79925"
+    },
+    {
+      "id": "84",
+      "name": "Exxon - Station 84",
+      "lat": 31.68509,
+      "lng": -106.443307,
+      "prices": {
+        "regular_petrol": 3.3,
+        "diesel": 3.88,
+        "electric_kwh": 0.43
+      },
+      "address": "El Paso Area, TX 79910"
+    },
+    {
+      "id": "85",
+      "name": "Chevron - Station 85",
+      "lat": 31.73972,
+      "lng": -106.358177,
+      "prices": {
+        "regular_petrol": 3.06,
+        "diesel": null,
+        "electric_kwh": 0.35
+      },
+      "address": "El Paso Area, TX 79929"
+    },
+    {
+      "id": "86",
+      "name": "Valero - Station 86",
+      "lat": 31.690556,
+      "lng": -106.25227,
+      "prices": {
+        "regular_petrol": 3.12,
+        "diesel": 3.72,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79918"
+    },
+    {
+      "id": "87",
+      "name": "Exxon - Station 87",
+      "lat": 31.723841,
+      "lng": -106.414571,
+      "prices": {
+        "regular_petrol": 3.29,
+        "diesel": 3.67,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79938"
+    },
+    {
+      "id": "88",
+      "name": "Circle K - Station 88",
+      "lat": 31.739549,
+      "lng": -106.573583,
+      "prices": {
+        "regular_petrol": 3.11,
+        "diesel": null,
+        "electric_kwh": 0.42
+      },
+      "address": "El Paso Area, TX 79920"
+    },
+    {
+      "id": "89",
+      "name": "Chevron - Station 89",
+      "lat": 31.788725,
+      "lng": -106.313367,
+      "prices": {
+        "regular_petrol": 3.05,
+        "diesel": 3.94,
+        "electric_kwh": 0.38
+      },
+      "address": "El Paso Area, TX 79918"
+    },
+    {
+      "id": "90",
+      "name": "Valero - Station 90",
+      "lat": 31.716438,
+      "lng": -106.460032,
+      "prices": {
+        "regular_petrol": 3.26,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79917"
+    },
+    {
+      "id": "91",
+      "name": "Circle K - Station 91",
+      "lat": 31.877879,
+      "lng": -106.47575,
+      "prices": {
+        "regular_petrol": 3.08,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79929"
+    },
+    {
+      "id": "92",
+      "name": "Shell - Station 92",
+      "lat": 31.859675,
+      "lng": -106.401487,
+      "prices": {
+        "regular_petrol": 3.11,
+        "diesel": null,
+        "electric_kwh": 0.37
+      },
+      "address": "El Paso Area, TX 79933"
+    },
+    {
+      "id": "93",
+      "name": "Chevron - Station 93",
+      "lat": 31.694838,
+      "lng": -106.51958,
+      "prices": {
+        "regular_petrol": 3.08,
+        "diesel": 3.94,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79919"
+    },
+    {
+      "id": "94",
+      "name": "Shell - Station 94",
+      "lat": 31.802975,
+      "lng": -106.325209,
+      "prices": {
+        "regular_petrol": 3.21,
+        "diesel": 3.85,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79931"
+    },
+    {
+      "id": "95",
+      "name": "Shell - Station 95",
+      "lat": 31.882493,
+      "lng": -106.478009,
+      "prices": {
+        "regular_petrol": 3.1,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79923"
+    },
+    {
+      "id": "96",
+      "name": "Circle K - Station 96",
+      "lat": 31.880411,
+      "lng": -106.270595,
+      "prices": {
+        "regular_petrol": 3.27,
+        "diesel": 3.68,
+        "electric_kwh": 0.44
+      },
+      "address": "El Paso Area, TX 79907"
+    },
+    {
+      "id": "97",
+      "name": "Shell - Station 97",
+      "lat": 31.818768,
+      "lng": -106.221449,
+      "prices": {
+        "regular_petrol": 3.08,
+        "diesel": 4.0,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79907"
+    },
+    {
+      "id": "98",
+      "name": "Valero - Station 98",
+      "lat": 31.741237,
+      "lng": -106.220918,
+      "prices": {
+        "regular_petrol": 3.1,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79924"
+    },
+    {
+      "id": "99",
+      "name": "Circle K - Station 99",
+      "lat": 31.691841,
+      "lng": -106.290673,
+      "prices": {
+        "regular_petrol": 3.21,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79929"
+    },
+    {
+      "id": "100",
+      "name": "Chevron - Station 100",
+      "lat": 31.783272,
+      "lng": -106.563141,
+      "prices": {
+        "regular_petrol": 3.02,
+        "diesel": null,
+        "electric_kwh": 0.4
+      },
+      "address": "El Paso Area, TX 79902"
+    },
+    {
+      "id": "101",
+      "name": "Chevron - Station 101",
+      "lat": 31.745846,
+      "lng": -106.371383,
+      "prices": {
+        "regular_petrol": 3.26,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79929"
+    },
+    {
+      "id": "102",
+      "name": "Chevron - Station 102",
+      "lat": 31.666229,
+      "lng": -106.532829,
+      "prices": {
+        "regular_petrol": 3.3,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79918"
+    },
+    {
+      "id": "103",
+      "name": "Circle K - Station 103",
+      "lat": 31.778889,
+      "lng": -106.426019,
+      "prices": {
+        "regular_petrol": 3.29,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79921"
+    },
+    {
+      "id": "104",
+      "name": "Circle K - Station 104",
+      "lat": 31.890187,
+      "lng": -106.440565,
+      "prices": {
+        "regular_petrol": 3.21,
+        "diesel": 3.76,
+        "electric_kwh": 0.39
+      },
+      "address": "El Paso Area, TX 79907"
+    },
+    {
+      "id": "105",
+      "name": "Valero - Station 105",
+      "lat": 31.838058,
+      "lng": -106.351007,
+      "prices": {
+        "regular_petrol": 3.13,
+        "diesel": 3.63,
+        "electric_kwh": 0.46
+      },
+      "address": "El Paso Area, TX 79910"
+    },
+    {
+      "id": "106",
+      "name": "Chevron - Station 106",
+      "lat": 31.876037,
+      "lng": -106.373808,
+      "prices": {
+        "regular_petrol": 3.25,
+        "diesel": 3.89,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79934"
+    },
+    {
+      "id": "107",
+      "name": "Circle K - Station 107",
+      "lat": 31.876734,
+      "lng": -106.295394,
+      "prices": {
+        "regular_petrol": 3.28,
+        "diesel": 3.74,
+        "electric_kwh": 0.51
+      },
+      "address": "El Paso Area, TX 79920"
+    },
+    {
+      "id": "108",
+      "name": "Exxon - Station 108",
+      "lat": 31.651223,
+      "lng": -106.313488,
+      "prices": {
+        "regular_petrol": 3.27,
+        "diesel": null,
+        "electric_kwh": 0.47
+      },
+      "address": "El Paso Area, TX 79914"
+    },
+    {
+      "id": "109",
+      "name": "Shell - Station 109",
+      "lat": 31.889122,
+      "lng": -106.4241,
+      "prices": {
+        "regular_petrol": 3.11,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79928"
+    },
+    {
+      "id": "110",
+      "name": "Shell - Station 110",
+      "lat": 31.798845,
+      "lng": -106.533563,
+      "prices": {
+        "regular_petrol": 3.16,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79920"
+    },
+    {
+      "id": "111",
+      "name": "Circle K - Station 111",
+      "lat": 31.694265,
+      "lng": -106.468519,
+      "prices": {
+        "regular_petrol": 3.1,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79929"
+    },
+    {
+      "id": "112",
+      "name": "Exxon - Station 112",
+      "lat": 31.813307,
+      "lng": -106.205897,
+      "prices": {
+        "regular_petrol": 3.11,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79925"
+    },
+    {
+      "id": "113",
+      "name": "Chevron - Station 113",
+      "lat": 31.813715,
+      "lng": -106.285962,
+      "prices": {
+        "regular_petrol": 3.26,
+        "diesel": 3.95,
+        "electric_kwh": 0.47
+      },
+      "address": "El Paso Area, TX 79921"
+    },
+    {
+      "id": "114",
+      "name": "Exxon - Station 114",
+      "lat": 31.794904,
+      "lng": -106.231863,
+      "prices": {
+        "regular_petrol": 3.23,
+        "diesel": null,
+        "electric_kwh": 0.47
+      },
+      "address": "El Paso Area, TX 79922"
+    },
+    {
+      "id": "115",
+      "name": "Exxon - Station 115",
+      "lat": 31.687109,
+      "lng": -106.285889,
+      "prices": {
+        "regular_petrol": 3.17,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79928"
+    },
+    {
+      "id": "116",
+      "name": "Chevron - Station 116",
+      "lat": 31.770082,
+      "lng": -106.318153,
+      "prices": {
+        "regular_petrol": 3.23,
+        "diesel": null,
+        "electric_kwh": 0.42
+      },
+      "address": "El Paso Area, TX 79930"
+    },
+    {
+      "id": "117",
+      "name": "Circle K - Station 117",
+      "lat": 31.795834,
+      "lng": -106.32131,
+      "prices": {
+        "regular_petrol": 3.29,
+        "diesel": null,
+        "electric_kwh": 0.51
+      },
+      "address": "El Paso Area, TX 79919"
+    },
+    {
+      "id": "118",
+      "name": "Chevron - Station 118",
+      "lat": 31.795703,
+      "lng": -106.519605,
+      "prices": {
+        "regular_petrol": 3.19,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79920"
+    },
+    {
+      "id": "119",
+      "name": "Chevron - Station 119",
+      "lat": 31.723642,
+      "lng": -106.300042,
+      "prices": {
+        "regular_petrol": 3.04,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79909"
+    },
+    {
+      "id": "120",
+      "name": "Shell - Station 120",
+      "lat": 31.778496,
+      "lng": -106.496554,
+      "prices": {
+        "regular_petrol": 3.11,
+        "diesel": null,
+        "electric_kwh": 0.53
+      },
+      "address": "El Paso Area, TX 79938"
+    },
+    {
+      "id": "121",
+      "name": "Valero - Station 121",
+      "lat": 31.723422,
+      "lng": -106.484865,
+      "prices": {
+        "regular_petrol": 3.28,
+        "diesel": 3.98,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79920"
+    },
+    {
+      "id": "122",
+      "name": "Chevron - Station 122",
+      "lat": 31.721754,
+      "lng": -106.466314,
+      "prices": {
+        "regular_petrol": 3.17,
+        "diesel": 3.77,
+        "electric_kwh": 0.42
+      },
+      "address": "El Paso Area, TX 79930"
+    },
+    {
+      "id": "123",
+      "name": "Circle K - Station 123",
+      "lat": 31.833195,
+      "lng": -106.207043,
+      "prices": {
+        "regular_petrol": 3.09,
+        "diesel": 3.81,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79928"
+    },
+    {
+      "id": "124",
+      "name": "Circle K - Station 124",
+      "lat": 31.762724,
+      "lng": -106.277645,
+      "prices": {
+        "regular_petrol": 3.14,
+        "diesel": 3.97,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79937"
+    },
+    {
+      "id": "125",
+      "name": "Chevron - Station 125",
+      "lat": 31.682371,
+      "lng": -106.299633,
+      "prices": {
+        "regular_petrol": 3.22,
+        "diesel": 3.62,
+        "electric_kwh": 0.49
+      },
+      "address": "El Paso Area, TX 79921"
+    },
+    {
+      "id": "126",
+      "name": "Circle K - Station 126",
+      "lat": 31.65502,
+      "lng": -106.487663,
+      "prices": {
+        "regular_petrol": 3.05,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79914"
+    },
+    {
+      "id": "127",
+      "name": "Exxon - Station 127",
+      "lat": 31.80027,
+      "lng": -106.311234,
+      "prices": {
+        "regular_petrol": 3.17,
+        "diesel": null,
+        "electric_kwh": 0.41
+      },
+      "address": "El Paso Area, TX 79933"
+    },
+    {
+      "id": "128",
+      "name": "Chevron - Station 128",
+      "lat": 31.682437,
+      "lng": -106.209242,
+      "prices": {
+        "regular_petrol": 3.23,
+        "diesel": 3.66,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79926"
+    },
+    {
+      "id": "129",
+      "name": "Shell - Station 129",
+      "lat": 31.880582,
+      "lng": -106.292795,
+      "prices": {
+        "regular_petrol": 3.13,
+        "diesel": 3.83,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79935"
+    },
+    {
+      "id": "130",
+      "name": "Chevron - Station 130",
+      "lat": 31.675526,
+      "lng": -106.302387,
+      "prices": {
+        "regular_petrol": 3.09,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79925"
+    },
+    {
+      "id": "131",
+      "name": "Shell - Station 131",
+      "lat": 31.685741,
+      "lng": -106.333881,
+      "prices": {
+        "regular_petrol": 3.03,
+        "diesel": 3.99,
+        "electric_kwh": 0.49
+      },
+      "address": "El Paso Area, TX 79910"
+    },
+    {
+      "id": "132",
+      "name": "Shell - Station 132",
+      "lat": 31.709743,
+      "lng": -106.503092,
+      "prices": {
+        "regular_petrol": 3.01,
+        "diesel": 3.88,
+        "electric_kwh": 0.53
+      },
+      "address": "El Paso Area, TX 79915"
+    },
+    {
+      "id": "133",
+      "name": "Shell - Station 133",
+      "lat": 31.778208,
+      "lng": -106.465929,
+      "prices": {
+        "regular_petrol": 3.04,
+        "diesel": 3.87,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79919"
+    },
+    {
+      "id": "134",
+      "name": "Exxon - Station 134",
+      "lat": 31.660003,
+      "lng": -106.564611,
+      "prices": {
+        "regular_petrol": 3.29,
+        "diesel": 3.96,
+        "electric_kwh": 0.47
+      },
+      "address": "El Paso Area, TX 79913"
+    },
+    {
+      "id": "135",
+      "name": "Exxon - Station 135",
+      "lat": 31.869191,
+      "lng": -106.564414,
+      "prices": {
+        "regular_petrol": 3.07,
+        "diesel": 3.92,
+        "electric_kwh": 0.37
+      },
+      "address": "El Paso Area, TX 79906"
+    },
+    {
+      "id": "136",
+      "name": "Chevron - Station 136",
+      "lat": 31.676696,
+      "lng": -106.442348,
+      "prices": {
+        "regular_petrol": 3.1,
+        "diesel": 3.7,
+        "electric_kwh": 0.39
+      },
+      "address": "El Paso Area, TX 79915"
+    },
+    {
+      "id": "137",
+      "name": "Valero - Station 137",
+      "lat": 31.676351,
+      "lng": -106.406311,
+      "prices": {
+        "regular_petrol": 3.17,
+        "diesel": null,
+        "electric_kwh": 0.52
+      },
+      "address": "El Paso Area, TX 79935"
+    },
+    {
+      "id": "138",
+      "name": "Circle K - Station 138",
+      "lat": 31.724536,
+      "lng": -106.23296,
+      "prices": {
+        "regular_petrol": 3.2,
+        "diesel": null,
+        "electric_kwh": 0.45
+      },
+      "address": "El Paso Area, TX 79938"
+    },
+    {
+      "id": "139",
+      "name": "Exxon - Station 139",
+      "lat": 31.707418,
+      "lng": -106.451479,
+      "prices": {
+        "regular_petrol": 3.06,
+        "diesel": 3.77,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79925"
+    },
+    {
+      "id": "140",
+      "name": "Circle K - Station 140",
+      "lat": 31.827288,
+      "lng": -106.452515,
+      "prices": {
+        "regular_petrol": 3.01,
+        "diesel": 3.94,
+        "electric_kwh": 0.43
+      },
+      "address": "El Paso Area, TX 79904"
+    },
+    {
+      "id": "141",
+      "name": "Circle K - Station 141",
+      "lat": 31.875231,
+      "lng": -106.512982,
+      "prices": {
+        "regular_petrol": 3.24,
+        "diesel": 3.61,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79924"
+    },
+    {
+      "id": "142",
+      "name": "Exxon - Station 142",
+      "lat": 31.686044,
+      "lng": -106.359735,
+      "prices": {
+        "regular_petrol": 3.03,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79933"
+    },
+    {
+      "id": "143",
+      "name": "Valero - Station 143",
+      "lat": 31.82627,
+      "lng": -106.343954,
+      "prices": {
+        "regular_petrol": 3.02,
+        "diesel": null,
+        "electric_kwh": 0.5
+      },
+      "address": "El Paso Area, TX 79935"
+    },
+    {
+      "id": "144",
+      "name": "Exxon - Station 144",
+      "lat": 31.653425,
+      "lng": -106.560925,
+      "prices": {
+        "regular_petrol": 3.21,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79932"
+    },
+    {
+      "id": "145",
+      "name": "Valero - Station 145",
+      "lat": 31.753188,
+      "lng": -106.34309,
+      "prices": {
+        "regular_petrol": 3.03,
+        "diesel": 3.79,
+        "electric_kwh": 0.5
+      },
+      "address": "El Paso Area, TX 79926"
+    },
+    {
+      "id": "146",
+      "name": "Valero - Station 146",
+      "lat": 31.6774,
+      "lng": -106.207668,
+      "prices": {
+        "regular_petrol": 3.26,
+        "diesel": 3.96,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79923"
+    },
+    {
+      "id": "147",
+      "name": "Valero - Station 147",
+      "lat": 31.671255,
+      "lng": -106.468326,
+      "prices": {
+        "regular_petrol": 3.23,
+        "diesel": 3.63,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79919"
+    },
+    {
+      "id": "148",
+      "name": "Exxon - Station 148",
+      "lat": 31.658552,
+      "lng": -106.4217,
+      "prices": {
+        "regular_petrol": 3.15,
+        "diesel": null,
+        "electric_kwh": 0.39
+      },
+      "address": "El Paso Area, TX 79925"
+    },
+    {
+      "id": "149",
+      "name": "Valero - Station 149",
+      "lat": 31.862057,
+      "lng": -106.263047,
+      "prices": {
+        "regular_petrol": 3.03,
+        "diesel": null,
+        "electric_kwh": 0.49
+      },
+      "address": "El Paso Area, TX 79921"
+    },
+    {
+      "id": "150",
+      "name": "Circle K - Station 150",
+      "lat": 31.756956,
+      "lng": -106.50989,
+      "prices": {
+        "regular_petrol": 3.1,
+        "diesel": null,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79919"
+    },
+    {
+      "id": "151",
+      "name": "Chevron - Station 151",
+      "lat": 31.829558,
+      "lng": -106.35493,
+      "prices": {
+        "regular_petrol": 3.0,
+        "diesel": 3.72,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79918"
+    },
+    {
+      "id": "152",
+      "name": "Chevron - Station 152",
+      "lat": 31.821209,
+      "lng": -106.234788,
+      "prices": {
+        "regular_petrol": 3.27,
+        "diesel": null,
+        "electric_kwh": 0.51
+      },
+      "address": "El Paso Area, TX 79927"
+    },
+    {
+      "id": "153",
+      "name": "Exxon - Station 153",
+      "lat": 31.758507,
+      "lng": -106.335429,
+      "prices": {
+        "regular_petrol": 3.04,
+        "diesel": 3.94,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79905"
+    },
+    {
+      "id": "154",
+      "name": "Exxon - Station 154",
+      "lat": 31.881042,
+      "lng": -106.396476,
+      "prices": {
+        "regular_petrol": 3.05,
+        "diesel": 3.81,
+        "electric_kwh": null
+      },
+      "address": "El Paso Area, TX 79915"
+    },
+    {
+      "id": "155",
+      "name": "Exxon - Station 155",
+      "lat": 31.711376,
+      "lng": -106.468285,
+      "prices": {
+        "regular_petrol": 3.13,
+        "diesel": null,
+        "electric_kwh": 0.46
+      },
+      "address": "El Paso Area, TX 79937"
     }
-]
+  ]
