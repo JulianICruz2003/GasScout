@@ -24,10 +24,10 @@ type Props = {
   userLocation: { lat: number; lng: number } | null;
 };
 
-const API_URL = 
-    Platform.OS === "web"
-      ? "http://localhost:3001/chat"
-      : "http://172.20.208.105:3001/chat";
+const API_URL =
+  Platform.OS === "web"
+    ? "http://localhost:3001/chat"
+    : "http://172.20.208.105:3001/chat";
 
 
 export default function AIChatBubble({
@@ -144,6 +144,14 @@ export default function AIChatBubble({
           placeholder="Ask about gas..."
           style={styles.input}
           multiline
+          returnKeyType="send"
+          onSubmitEditing={sendMessage}
+          onKeyPress={(e: any) => {
+            if (e.nativeEvent.key === "Enter" && !e.shiftKey) {
+              e.preventDefault?.();
+              sendMessage();
+            }
+          }}
         />
 
         <Pressable style={styles.sendButton} onPress={sendMessage}>

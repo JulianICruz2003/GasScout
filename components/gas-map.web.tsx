@@ -193,6 +193,13 @@ export default function GasMap({
           placeholder="Enter ZIP code"
           style={styles.input}
           keyboardType="number-pad"
+          returnKeyType="search"
+          onSubmitEditing={searchZip}
+          onKeyPress={(e: any) => {
+            if (e.nativeEvent.key === "Enter") {
+              searchZip();
+            }
+          }}
         />
 
         <Pressable style={styles.button} onPress={searchZip}>
