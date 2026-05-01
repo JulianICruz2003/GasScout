@@ -1,13 +1,9 @@
-<<<<<<< HEAD
-# Exclude API keys
-node_modules/
-.env
-.DS_Store
-=======
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
-
 # dependencies
 node_modules/
+
+# environment
+.env
+.env*.local
 
 # Expo
 .expo/
@@ -34,17 +30,14 @@ yarn-error.*
 
 # macOS
 .DS_Store
+
+# misc
 *.pem
-
-# local env files
-.env*.local
-
-# typescript
 *.tsbuildinfo
 
+# example app
 app-example
 
 # generated native folders
 /ios
 /android
->>>>>>> 0c9a464 (Initial commit)
