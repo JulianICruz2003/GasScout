@@ -7,11 +7,15 @@ const app = express();
 const PORT = 3001;
 
 app.use(cors());
-app.use(express.json({ limit: "2mb" }));
+app.use(express.json({ limit: "5mb" }));
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+function formatPrice(value, unit = "") {
+  return value == null ? "N/A" : `$${Number(value).toFixed(2)}${unit}`;
+}
 
 function buildStationSummary(stations = []) {
   return stations
@@ -19,11 +23,10 @@ function buildStationSummary(stations = []) {
       return [
         `Name: ${s.name}`,
         `Address: ${s.address}`,
-        `Regular gas: ${s.prices?.regular_petrol ?? "N/A"}`,
-        `Diesel: ${s.prices?.diesel ?? "N/A"}`,
-        `EV: ${s.prices?.electric_kwh ?? "N/A"}`,
-        `Latitude: ${s.lat}`,
-        `Longitude: ${s.lng}`,
+        `Distance: ${s.distance_text ?? (s.distance_miles != null ? `${s.distance_miles} miles away` : "Unknown")}`,
+        `Regular gas: ${formatPrice(s.prices?.regular_petrol)}`,
+        `Diesel: ${formatPrice(s.prices?.diesel)}`,
+        `EV: ${formatPrice(s.prices?.electric_kwh, "/kWh")}`,
       ].join(" | ");
     })
     .join("\n");
@@ -39,9 +42,11 @@ app.post("/chat", async (req, res) => {
       ? JSON.stringify(context.selectedStation, null, 2)
       : "None";
 
-    const userLocationText = context.userLocation
-      ? `${context.userLocation.lat}, ${context.userLocation.lng}`
+    const closestStationText = context.closestStation
+      ? JSON.stringify(context.closestStation, null, 2)
       : "Unknown";
+
+    const userLocationAvailable = Boolean(context.userLocationAvailable);
 
     const completion = await client.chat.completions.create({
       model: "gpt-4.1-mini",
@@ -51,31 +56,35 @@ app.post("/chat", async (req, res) => {
           content: `
 You are the GasScout assistant.
 
-You help users understand the gas stations shown on their app map.
+You help users find gas stations from the app's station data.
 
-Use the station data below when answering questions about:
-- cheapest gas
-- diesel availability
-- EV charging
-- station addresses
-- selected station
-- nearby stations
-- gas prices
+Important location rules:
+- Never mention latitude.
+- Never mention longitude.
+- Never ask the user for latitude or longitude.
+- The frontend already calculated distance_miles and distance_text.
+- Use distance_text or distance_miles when describing how far away a station is.
+- If userLocationAvailable is true, do NOT say you lack location details.
+- If the user asks for the closest gas station, use the Closest station below.
 
-User location:
-${userLocationText}
+User location available:
+${userLocationAvailable}
 
 Selected station:
 ${selectedStationText}
 
-Stations currently on the map:
+Closest station:
+${closestStationText}
+
+Stations currently available:
 ${stationSummary}
 
-Rules:
-- If the user asks about gas stations, use the station data.
-- If the user asks for the cheapest station, compare regular gas prices.
-- If a station has N/A for a fuel type, do not claim it has that fuel.
+Answering rules:
 - Keep answers short and helpful.
+- If the user asks for the closest station, give the station name, distance, address, and regular gas price if available.
+- If the user asks for the cheapest station, compare regular gas prices unless they ask for diesel or EV.
+- If a station has N/A for a fuel type, do not claim it has that fuel.
+- Do not expose raw JSON unless the user asks for technical details.
           `,
         },
         ...messages.map((m) => ({

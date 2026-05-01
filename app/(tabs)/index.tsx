@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable, ScrollView } from "react-native";
 import GasMap from "../../components/gas-map";
 import FilterBar from "../../components/filter-bar";
 import StationCard from "../../components/station-card";
@@ -8,14 +8,6 @@ import stations from "../../stations.json";
 import * as Location from "expo-location";
 
 type Station = typeof stations[number];
-
-function getCheapestStation() {
-  return [...stations].sort((a, b) => {
-    const aPrice = a.prices.regular_petrol ?? Infinity;
-    const bPrice = b.prices.regular_petrol ?? Infinity;
-    return aPrice - bPrice;
-  })[0];
-}
 
 function getDistanceMiles(
   lat1: number,
@@ -52,10 +44,15 @@ export default function MapScreen() {
   const [fuelType, setFuelType] = useState<FuelType>("petrol");
   const [activeFilter, setActiveFilter] = useState<FilterMode>("cheapest");
   const [maxDistanceMiles, setMaxDistanceMiles] = useState(10);
+
   const stationBrands = useMemo(() => {
-    return Array.from(new Set(stations.map((station) => getStationBrand(station.name))));
+    return Array.from(
+      new Set(stations.map((station) => getStationBrand(station.name)))
+    );
   }, []);
-  const [selectedBrands, setSelectedBrands] = useState<string[]>(stationBrands);
+
+  const [selectedBrands, setSelectedBrands] =
+    useState<string[]>(stationBrands);
 
   function getFuelPrice(station: Station, fuelType: FuelType) {
     if (fuelType === "petrol") return station.prices.regular_petrol;
@@ -75,17 +72,11 @@ export default function MapScreen() {
     return stations.filter((station) => {
       const brand = getStationBrand(station.name);
 
-      if (!selectedBrands.includes(brand)) {
-        return false;
-      }
+      if (!selectedBrands.includes(brand)) return false;
 
-      if (getFuelPrice(station, fuelType) == null) {
-        return false;
-      }
+      if (getFuelPrice(station, fuelType) == null) return false;
 
-      if (!userLocation) {
-        return true;
-      }
+      if (!userLocation) return true;
 
       const distance = getDistanceMiles(
         userLocation.lat,
@@ -98,32 +89,34 @@ export default function MapScreen() {
     });
   }, [selectedBrands, userLocation, maxDistanceMiles, fuelType]);
 
-  const cheapestStation = useMemo(() => {
+  // ✅ NEW: sorted list based on toggle
+  const sortedStations = useMemo(() => {
     return [...filteredStations].sort((a, b) => {
+      if (activeFilter === "closest" && userLocation) {
+        const aDistance = getDistanceMiles(
+          userLocation.lat,
+          userLocation.lng,
+          a.lat,
+          a.lng
+        );
+        const bDistance = getDistanceMiles(
+          userLocation.lat,
+          userLocation.lng,
+          b.lat,
+          b.lng
+        );
+        return aDistance - bDistance;
+      }
+
       const aPrice = getFuelPrice(a, fuelType) ?? Infinity;
       const bPrice = getFuelPrice(b, fuelType) ?? Infinity;
       return aPrice - bPrice;
-    })[0] ?? stations[0];
-  }, [filteredStations, fuelType]);
-
-  const closestStation = useMemo(() => {
-    if (!userLocation) return null;
-
-    return [...filteredStations].sort((a, b) => {
-      const aDistance = getDistanceMiles(userLocation.lat, userLocation.lng, a.lat, a.lng);
-      const bDistance = getDistanceMiles(userLocation.lat, userLocation.lng, b.lat, b.lng);
-      return aDistance - bDistance;
-    })[0] ?? null;
-  }, [userLocation, filteredStations]);
-
-  const featuredStation =
-    activeFilter === "closest" && closestStation
-      ? closestStation
-      : cheapestStation;
-
+    });
+  }, [filteredStations, activeFilter, userLocation, fuelType]);
 
   const [selectedStation, setSelectedStation] = useState<Station | null>(null);
-  const [highlightedStation, setHighlightedStation] = useState<Station | null>(null);
+  const [highlightedStation, setHighlightedStation] =
+    useState<Station | null>(null);
   const [selectedStationVersion, setSelectedStationVersion] = useState(0);
 
   useEffect(() => {
@@ -169,54 +162,70 @@ export default function MapScreen() {
         userLocation={userLocation}
       />
 
-      <Pressable
-        style={styles.bottomSheet}
-        onPress={() => {
-          setSelectedStation(featuredStation);
-          setSelectedStationVersion((current) => current + 1);
-        }}
-        onHoverIn={() => setHighlightedStation(featuredStation)}
-        onHoverOut={() => setHighlightedStation(null)}
-      >
-        <StationCard
-          name={featuredStation.name}
-          price={
-            getFuelPrice(featuredStation, fuelType) != null
-              ? `$${getFuelPrice(featuredStation, fuelType)!.toFixed(2)}`
-              : "N/A"
-          }
-          distance={
-            userLocation
-              ? `${getDistanceMiles(
-                userLocation.lat,
-                userLocation.lng,
-                featuredStation.lat,
-                featuredStation.lng
-              ).toFixed(1)} miles`
-              : activeFilter === "closest"
-                ? "Closest nearby"
-                : "Cheapest nearby"
-          }
-          address={featuredStation.address}
-        />
-      </Pressable>
+      {/* ✅ NEW SCROLLABLE LIST */}
+      <View style={styles.bottomSheet}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.stationList}
+        >
+          {sortedStations.map((station) => {
+            const price = getFuelPrice(station, fuelType);
+
+            return (
+              <Pressable
+                key={station.id}
+                style={styles.stationCardWrapper}
+                onPress={() => {
+                  setSelectedStation(station);
+                  setSelectedStationVersion((current) => current + 1);
+                }}
+                onHoverIn={() => setHighlightedStation(station)}
+                onHoverOut={() => setHighlightedStation(null)}
+              >
+                <StationCard
+                  name={station.name}
+                  price={price != null ? `$${price.toFixed(2)}` : "N/A"}
+                  distance={
+                    userLocation
+                      ? `${getDistanceMiles(
+                          userLocation.lat,
+                          userLocation.lng,
+                          station.lat,
+                          station.lng
+                        ).toFixed(1)} miles`
+                      : activeFilter === "closest"
+                      ? "Closest nearby"
+                      : "Cheapest nearby"
+                  }
+                  address={station.address}
+                />
+              </Pressable>
+            );
+          })}
+        </ScrollView>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  overlay: {
-    position: "absolute",
-    top: 60,
-    left: 64,
-    right: 64,
-    zIndex: 20,
-  },
+
   bottomSheet: {
     position: "absolute",
     left: 16,
     right: 16,
     bottom: 24,
+    maxHeight: 140,
+  },
+
+  stationList: {
+    gap: 12,
+    paddingRight: 16,
+  },
+
+  stationCardWrapper: {
+    width: 420,
   },
 });
