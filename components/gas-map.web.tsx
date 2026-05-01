@@ -1,23 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { View, TextInput, Pressable, Text, StyleSheet } from "react-native";
 import "maplibre-gl/dist/maplibre-gl.css";
-
-const stations = [
-  {
-    id: "1",
-    name: "Shell",
-    price: "$3.29",
-    latitude: 37.78825,
-    longitude: -122.4324,
-  },
-  {
-    id: "2",
-    name: "Chevron",
-    price: "$3.39",
-    latitude: 37.7845,
-    longitude: -122.4279,
-  },
-];
+import stations from "../stations.json";
 
 export default function GasMap() {
   const mapContainer = useRef<HTMLDivElement | null>(null);
@@ -62,10 +46,10 @@ export default function GasMap() {
 
       stations.forEach((station) => {
         new maplibregl.default.Marker()
-          .setLngLat([station.longitude, station.latitude])
+          .setLngLat([station.lng, station.lat])
           .setPopup(
             new maplibregl.default.Popup().setHTML(
-              `<strong>${station.name}</strong><br/>${station.price}`
+              `<strong>${station.name}</strong><br/>${station.prices}`
             )
           )
           .addTo(map);

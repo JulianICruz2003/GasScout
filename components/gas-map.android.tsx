@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import MapView, { Marker, Region } from "react-native-maps";
 import * as Location from "expo-location";
+import stations from "../stations.json";
 
 export default function GasMap() {
   const [region, setRegion] = useState<Region | null>(null);
@@ -118,6 +119,18 @@ export default function GasMap() {
           title="Selected area"
           description={zip ? `ZIP: ${zip}` : "Your current location"}
         />
+        {stations.map((station) => (
+          <Marker
+          key={station.id}
+          pinColor="#2563eb"
+          coordinate={{
+            latitude: station.lat,
+            longitude: station.lng,
+          }}
+          title={station.name}
+          description={`${station.prices}`}
+          />
+        ))}
       </MapView>
     </View>
   );
@@ -182,5 +195,13 @@ const styles = StyleSheet.create({
     color: "#b91c1c",
     fontWeight: "700",
     textAlign: "center",
+  },
+  blueMarker: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: "#2563eb",
+    borderWidth: 3,
+    borderColor: "white",
   },
 });
