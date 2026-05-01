@@ -37,15 +37,46 @@ function getDistanceMiles(
 }
 
 export default function MapScreen() {
-  const cheapestStation = useMemo(() => getCheapestStation(), []);
-  const [selectedStation, setSelectedStation] = useState<Station | null>(null);
-  const [highlightedStation, setHighlightedStation] = useState<Station | null>(null); 
-  const [selectedStationVersion, setSelectedStationVersion] = useState(0);
+  type FilterMode = "cheapest" | "closest";
+  const [activeFilter, setActiveFilter] = useState<FilterMode>("cheapest");
 
   const [userLocation, setUserLocation] = useState<{
     lat: number;
     lng: number;
   } | null>(null);
+
+  const cheapestStation = useMemo(() => getCheapestStation(), []);
+  const closestStation = useMemo(() => {
+    if (!userLocation) return null;
+  
+    return [...stations].sort((a, b) => {
+      const aDistance = getDistanceMiles(
+        userLocation.lat,
+        userLocation.lng,
+        a.lat,
+        a.lng
+      );
+  
+      const bDistance = getDistanceMiles(
+        userLocation.lat,
+        userLocation.lng,
+        b.lat,
+        b.lng
+      );
+  
+      return aDistance - bDistance;
+    })[0];
+  }, [userLocation]);
+  
+  const featuredStation =
+    activeFilter === "closest" && closestStation
+      ? closestStation
+      : cheapestStation;
+
+
+  const [selectedStation, setSelectedStation] = useState<Station | null>(null);
+  const [highlightedStation, setHighlightedStation] = useState<Station | null>(null); 
+  const [selectedStationVersion, setSelectedStationVersion] = useState(0);
   
   useEffect(() => {
     async function loadLocation() {
@@ -69,11 +100,12 @@ export default function MapScreen() {
         selectedStation={selectedStation}
         highlightedStation={highlightedStation}
         selectedStationVersion={selectedStationVersion}
-/>
+      />
 
-      <View style={styles.overlay}>
-        <FilterBar />
-      </View>
+    <FilterBar
+      activeFilter={activeFilter}
+      onChangeFilter={setActiveFilter}
+    />
 
       <AIChatBubble
         stations={stations}
