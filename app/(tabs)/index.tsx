@@ -1,13 +1,75 @@
-import { View, StyleSheet } from "react-native";
+import { useEffect, useMemo, useState } from "react";
+import { View, StyleSheet, Pressable } from "react-native";
 import GasMap from "../../components/gas-map";
 import FilterBar from "../../components/filter-bar";
 import StationCard from "../../components/station-card";
 import AIChatBubble from "../../components/ai-chat-bubble";
+import stations from "../../stations.json";
+import * as Location from "expo-location";
+
+type Station = typeof stations[number];
+
+function getCheapestStation() {
+  return [...stations].sort((a, b) => {
+    const aPrice = a.prices.regular_petrol ?? Infinity;
+    const bPrice = b.prices.regular_petrol ?? Infinity;
+    return aPrice - bPrice;
+  })[0];
+}
+
+function getDistanceMiles(
+  lat1: number,
+  lng1: number,
+  lat2: number,
+  lng2: number
+) {
+  const R = 3958.8;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLng = ((lng2 - lng1) * Math.PI) / 180;
+
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLng / 2) ** 2;
+
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
 
 export default function MapScreen() {
+  const cheapestStation = useMemo(() => getCheapestStation(), []);
+  const [selectedStation, setSelectedStation] = useState<Station | null>(null);
+  const [highlightedStation, setHighlightedStation] = useState<Station | null>(null); 
+  const [selectedStationVersion, setSelectedStationVersion] = useState(0);
+
+  const [userLocation, setUserLocation] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
+  
+  useEffect(() => {
+    async function loadLocation() {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") return;
+  
+      const location = await Location.getCurrentPositionAsync({});
+  
+      setUserLocation({
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
+      });
+    }
+  
+    loadLocation();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <GasMap />
+      <GasMap
+        selectedStation={selectedStation}
+        highlightedStation={highlightedStation}
+        selectedStationVersion={selectedStationVersion}
+/>
 
       <View style={styles.overlay}>
         <FilterBar />
@@ -15,14 +77,35 @@ export default function MapScreen() {
 
       <AIChatBubble />
 
-      <View style={styles.bottomSheet}>
+      <Pressable
+        style={styles.bottomSheet}
+        onPress={() => {
+          setSelectedStation(cheapestStation);
+          setSelectedStationVersion((current) => current + 1);
+        }}
+        onHoverIn={() => setHighlightedStation(cheapestStation)}
+        onHoverOut={() => setHighlightedStation(null)}
+      >
         <StationCard
-          name="Shell"
-          price="$3.29"
-          distance="0.8 mi"
-          address="123 Main St"
+          name={cheapestStation.name}
+          price={
+          cheapestStation.prices.regular_petrol != null
+            ? `$${cheapestStation.prices.regular_petrol.toFixed(2)}`
+            : "N/A"
+          }
+          distance={
+            userLocation
+              ? `${getDistanceMiles(
+                  userLocation.lat,
+                  userLocation.lng,
+                  cheapestStation.lat,
+                  cheapestStation.lng
+                ).toFixed(1)} miles away`
+              : "Cheapest nearby"
+          }
+          address={cheapestStation.address}
         />
-      </View>
+      </Pressable>
     </View>
   );
 }
@@ -32,8 +115,8 @@ const styles = StyleSheet.create({
   overlay: {
     position: "absolute",
     top: 60,
-    left: 16,
-    right: 16,
+    left: 64,
+    right: 64,
     zIndex: 20,
   },
   bottomSheet: {

@@ -9,8 +9,47 @@ import {
 } from "react-native";
 import MapView, { Marker, Region } from "react-native-maps";
 import * as Location from "expo-location";
+import stations from "../stations.json";
 
-export default function GasMap() {
+function formatPrices(prices: {
+  regular_petrol?: number | null;
+  diesel?: number | null;
+  electric_kwh?: number | null;
+}) {
+  const parts = [];
+
+  if (prices.regular_petrol != null) {
+    parts.push(`Regular: $${prices.regular_petrol.toFixed(2)}`);
+  }
+
+  if (prices.diesel != null) {
+    parts.push(`Diesel: $${prices.diesel.toFixed(2)}`);
+  }
+
+  if (prices.electric_kwh != null) {
+    parts.push(`EV: $${prices.electric_kwh.toFixed(2)}/kWh`);
+  }
+
+  return parts.join(" • ");
+}
+
+type Station = {
+  id: string;
+  lat: number;
+  lng: number;
+};
+
+type Props = {
+  selectedStation: Station | null;
+  highlightedStation: Station | null;
+  selectedStationVersion: number;
+};
+
+export default function GasMap({
+  selectedStation,
+  highlightedStation,
+  selectedStationVersion,
+}: Props) {
   const [region, setRegion] = useState<Region | null>(null);
   const [zip, setZip] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -18,14 +57,14 @@ export default function GasMap() {
   useEffect(() => {
     async function getLocation() {
       const { status } = await Location.requestForegroundPermissionsAsync();
-
+  
       if (status !== "granted") {
         setErrorMsg("Location permission denied.");
         return;
       }
-
+  
       const location = await Location.getCurrentPositionAsync({});
-
+  
       setRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -33,9 +72,20 @@ export default function GasMap() {
         longitudeDelta: 0.03,
       });
     }
-
+  
     getLocation();
   }, []);
+  
+  useEffect(() => {
+    if (!selectedStation) return;
+  
+    setRegion({
+      latitude: selectedStation.lat,
+      longitude: selectedStation.lng,
+      latitudeDelta: 0.02,
+      longitudeDelta: 0.02,
+    });
+  }, [selectedStation, selectedStationVersion]);
 
   async function searchZip() {
     if (!zip.trim()) return;
@@ -118,6 +168,22 @@ export default function GasMap() {
           title="Selected area"
           description={zip ? `ZIP: ${zip}` : "Your current location"}
         />
+        {stations.map((station) => {
+          const isHighlighted = highlightedStation?.id === station.id;
+
+          return (
+            <Marker
+              key={`${station.id}-${isHighlighted ? "highlighted" : "normal"}`}
+              coordinate={{
+                latitude: station.lat,
+                longitude: station.lng,
+              }}
+              pinColor={isHighlighted ? "#f97316" : "#2563eb"}
+              title={station.name}
+              description={formatPrices(station.prices)}
+            />
+          );
+        })}
       </MapView>
     </View>
   );
@@ -142,8 +208,8 @@ const styles = StyleSheet.create({
   searchBox: {
     position: "absolute",
     top: 135,
-    left: 16,
-    right: 16,
+    left: 64,
+    right: 64,
     zIndex: 10,
     flexDirection: "row",
     backgroundColor: "white",

@@ -1,27 +1,50 @@
 import { useEffect, useRef, useState } from "react";
 import { View, TextInput, Pressable, Text, StyleSheet } from "react-native";
 import "maplibre-gl/dist/maplibre-gl.css";
+import stations from "../stations.json";
 
-const stations = [
-  {
-    id: "1",
-    name: "Shell",
-    price: "$3.29",
-    latitude: 37.78825,
-    longitude: -122.4324,
-  },
-  {
-    id: "2",
-    name: "Chevron",
-    price: "$3.39",
-    latitude: 37.7845,
-    longitude: -122.4279,
-  },
-];
+function formatPrices(prices: {
+  regular_petrol?: number | null;
+  diesel?: number | null;
+  electric_kwh?: number | null;
+}) {
+  const parts = [];
 
-export default function GasMap() {
+  if (prices.regular_petrol != null) {
+    parts.push(`Regular: $${prices.regular_petrol.toFixed(2)}`);
+  }
+
+  if (prices.diesel != null) {
+    parts.push(`Diesel: $${prices.diesel.toFixed(2)}`);
+  }
+
+  if (prices.electric_kwh != null) {
+    parts.push(`EV: $${prices.electric_kwh.toFixed(2)}/kWh`);
+  }
+
+  return parts.join(" • ");
+}
+
+type Station = {
+  id: string;
+  lat: number;
+  lng: number;
+};
+
+type Props = {
+  selectedStation: Station | null;
+  highlightedStation: Station | null;
+  selectedStationVersion: number;
+};
+
+export default function GasMap({
+  selectedStation,
+  highlightedStation,
+  selectedStationVersion,
+}: Props) {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<any>(null);
+  const stationMarkersRef = useRef<Record<string, any>>({});
   const [zip, setZip] = useState("");
 
   useEffect(() => {
@@ -61,14 +84,18 @@ export default function GasMap() {
       map.addControl(new maplibregl.default.NavigationControl(), "top-right");
 
       stations.forEach((station) => {
-        new maplibregl.default.Marker()
-          .setLngLat([station.longitude, station.latitude])
+        const marker = new maplibregl.default.Marker({
+          color: "#2563eb",
+        })
+          .setLngLat([station.lng, station.lat])
           .setPopup(
             new maplibregl.default.Popup().setHTML(
-              `<strong>${station.name}</strong><br/>${station.price}`
+              `<strong>${station.name}</strong><br/>${formatPrices(station.prices)}<br/>${station.address}`
             )
           )
           .addTo(map);
+      
+        stationMarkersRef.current[station.id] = marker;
       });
 
       if (navigator.geolocation) {
@@ -81,7 +108,7 @@ export default function GasMap() {
             zoom: 14,
           });
 
-          new maplibregl.default.Marker({ color: "#2563eb" })
+          new maplibregl.default.Marker({ color: "#dc2626" })
             .setLngLat([longitude, latitude])
             .setPopup(new maplibregl.default.Popup().setHTML("You are here"))
             .addTo(map);
@@ -98,6 +125,35 @@ export default function GasMap() {
       }
     };
   }, []);
+
+  // Highlight useEffect
+  useEffect(() => {
+    Object.entries(stationMarkersRef.current).forEach(([stationId, marker]) => {
+      const markerElement = marker.getElement();
+      const iconElement = markerElement.firstElementChild as HTMLElement | null;
+  
+      if (!iconElement) return;
+  
+      iconElement.style.transition = "transform 0.2s ease";
+  
+      if (stationId === highlightedStation?.id) {
+        iconElement.style.transform = "scale(1.8)";
+        markerElement.style.zIndex = "999";
+      } else {
+        iconElement.style.transform = "scale(1)";
+        markerElement.style.zIndex = "";
+      }
+    });
+  }, [highlightedStation]);
+
+  useEffect(() => {
+    if (!selectedStation || !mapRef.current) return;
+  
+    mapRef.current.flyTo({
+      center: [selectedStation.lng, selectedStation.lat],
+      zoom: 15,
+    });
+  }, [selectedStation, selectedStationVersion]);
 
   async function searchZip() {
     if (!zip.trim()) return;
@@ -151,8 +207,8 @@ const styles = StyleSheet.create({
   searchBox: {
     position: "absolute",
     top: 10,
-    left: 16,
-    right: 16,
+    left: 64,
+    right: 64,
     zIndex: 10,
     flexDirection: "row",
     backgroundColor: "white",
