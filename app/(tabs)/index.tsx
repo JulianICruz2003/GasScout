@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
   overlay: {
     position: "absolute",
     top: 60,
-    left: 16,
-    right: 16,
+    left: 64,
+    right: 64,
     zIndex: 20,
   },
   bottomSheet: {

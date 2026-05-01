@@ -175,8 +175,8 @@ const styles = StyleSheet.create({
   searchBox: {
     position: "absolute",
     top: 10,
-    left: 16,
-    right: 16,
+    left: 64,
+    right: 64,
     zIndex: 10,
     flexDirection: "row",
     backgroundColor: "white",
