@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -29,6 +29,25 @@ const API_URL =
     ? "http://localhost:3001/chat"
     : "http://172.20.208.105:3001/chat";
 
+function getDistanceMiles(
+  lat1: number,
+  lng1: number,
+  lat2: number,
+  lng2: number
+) {
+  const R = 3958.8;
+
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLng = ((lng2 - lng1) * Math.PI) / 180;
+
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLng / 2) ** 2;
+
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
 
 export default function AIChatBubble({
   stations,
@@ -39,12 +58,38 @@ export default function AIChatBubble({
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const listRef = useRef<FlatList<Message>>(null);
+
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
       content: "Hi! I can help you find cheaper gas nearby.",
     },
   ]);
+
+  useEffect(() => {
+    listRef.current?.scrollToEnd({ animated: true });
+  }, [messages]);
+
+  function prepareStationForAI(station: Station) {
+    const distance =
+      userLocation && station.lat && station.lng
+        ? getDistanceMiles(
+            userLocation.lat,
+            userLocation.lng,
+            station.lat,
+            station.lng
+          )
+        : null;
+
+    return {
+      id: station.id,
+      name: station.name,
+      address: station.address,
+      prices: station.prices,
+      distance_miles: distance != null ? Number(distance.toFixed(1)) : null,
+    };
+  }
 
   async function sendMessage() {
     if (!input.trim() || loading) return;
@@ -60,6 +105,12 @@ export default function AIChatBubble({
     setInput("");
     setLoading(true);
 
+    const stationsForAI = stations.map(prepareStationForAI);
+
+    const selectedStationForAI = selectedStation
+      ? prepareStationForAI(selectedStation)
+      : null;
+
     try {
       const response = await fetch(API_URL, {
         method: "POST",
@@ -69,9 +120,11 @@ export default function AIChatBubble({
         body: JSON.stringify({
           messages: nextMessages,
           context: {
-            stations,
-            selectedStation,
-            userLocation,
+            stations: stationsForAI,
+            selectedStation: selectedStationForAI,
+            userLocation: userLocation ? "available" : null,
+            instructions:
+              "Never return latitude or longitude. Always describe station locations using distance_miles in miles.",
           },
         }),
       });
@@ -122,9 +175,13 @@ export default function AIChatBubble({
       </View>
 
       <FlatList
+        ref={listRef}
         data={messages}
         keyExtractor={(_, index) => String(index)}
         style={styles.messages}
+        onContentSizeChange={() =>
+          listRef.current?.scrollToEnd({ animated: true })
+        }
         renderItem={({ item }) => (
           <View
             style={[
