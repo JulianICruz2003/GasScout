@@ -25,7 +25,16 @@ function formatPrices(prices: {
   return parts.join(" • ");
 }
 
-export default function GasMap() {
+type Station = {
+  lat: number;
+  lng: number;
+};
+
+type Props = {
+  selectedStation: Station | null;
+};
+
+export default function GasMap({ selectedStation }: Props) {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<any>(null);
   const [zip, setZip] = useState("");
@@ -104,6 +113,15 @@ export default function GasMap() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (!selectedStation || !mapRef.current) return;
+  
+    mapRef.current.flyTo({
+      center: [selectedStation.lng, selectedStation.lat],
+      zoom: 15,
+    });
+  }, [selectedStation]);
 
   async function searchZip() {
     if (!zip.trim()) return;

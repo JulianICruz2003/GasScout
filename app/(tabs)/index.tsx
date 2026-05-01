@@ -1,13 +1,28 @@
-import { View, StyleSheet } from "react-native";
+import { useMemo, useState } from "react";
+import { View, StyleSheet, Pressable } from "react-native";
 import GasMap from "../../components/gas-map";
 import FilterBar from "../../components/filter-bar";
 import StationCard from "../../components/station-card";
 import AIChatBubble from "../../components/ai-chat-bubble";
+import stations from "../../stations.json";
+
+type Station = typeof stations[number];
+
+function getCheapestStation() {
+  return [...stations].sort((a, b) => {
+    const aPrice = a.prices.regular_petrol ?? Infinity;
+    const bPrice = b.prices.regular_petrol ?? Infinity;
+    return aPrice - bPrice;
+  })[0];
+}
 
 export default function MapScreen() {
+  const cheapestStation = useMemo(() => getCheapestStation(), []);
+  const [selectedStation, setSelectedStation] = useState<Station | null>(null);
+
   return (
     <View style={styles.container}>
-      <GasMap />
+      <GasMap selectedStation={selectedStation} />
 
       <View style={styles.overlay}>
         <FilterBar />
@@ -15,14 +30,21 @@ export default function MapScreen() {
 
       <AIChatBubble />
 
-      <View style={styles.bottomSheet}>
+      <Pressable
+        style={styles.bottomSheet}
+        onPress={() => setSelectedStation(cheapestStation)}
+      >
         <StationCard
-          name="Shell"
-          price="$3.29"
-          distance="0.8 mi"
-          address="123 Main St"
+          name={cheapestStation.name}
+          price={
+          cheapestStation.prices.regular_petrol != null
+            ? `$${cheapestStation.prices.regular_petrol.toFixed(2)}`
+            : "N/A"
+          }
+          distance="Cheapest nearby"
+          address={cheapestStation.address}
         />
-      </View>
+      </Pressable>
     </View>
   );
 }

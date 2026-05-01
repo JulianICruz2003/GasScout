@@ -33,7 +33,16 @@ function formatPrices(prices: {
   return parts.join(" • ");
 }
 
-export default function GasMap() {
+type Station = {
+  lat: number;
+  lng: number;
+};
+
+type Props = {
+  selectedStation: Station | null;
+};
+
+export default function GasMap({ selectedStation }: Props) {
   const [region, setRegion] = useState<Region | null>(null);
   const [zip, setZip] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -56,6 +65,17 @@ export default function GasMap() {
         longitudeDelta: 0.03,
       });
     }
+
+    useEffect(() => {
+      if (!selectedStation) return;
+    
+      setRegion({
+        latitude: selectedStation.lat,
+        longitude: selectedStation.lng,
+        latitudeDelta: 0.02,
+        longitudeDelta: 0.02,
+      });
+    }, [selectedStation]);
 
     getLocation();
   }, []);
