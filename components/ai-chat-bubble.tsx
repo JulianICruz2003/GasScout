@@ -15,7 +15,11 @@ type Message = {
   content: string;
 };
 
-const API_URL = "http://localhost:3001/chat";
+const API_URL = 
+    Platform.OS === "web"
+      ? "http://localhost:3001/chat"
+      : "http://172.20.208.105:3001/chat";
+
 
 export default function AIChatBubble() {
   const [open, setOpen] = useState(false);
