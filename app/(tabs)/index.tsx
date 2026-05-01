@@ -45,13 +45,23 @@ export default function MapScreen() {
     lat: number;
     lng: number;
   } | null>(null);
+
   type FilterMode = "cheapest" | "closest";
+  type FuelType = "petrol" | "diesel" | "electric";
+
+  const [fuelType, setFuelType] = useState<FuelType>("petrol");
   const [activeFilter, setActiveFilter] = useState<FilterMode>("cheapest");
   const [maxDistanceMiles, setMaxDistanceMiles] = useState(10);
   const stationBrands = useMemo(() => {
     return Array.from(new Set(stations.map((station) => getStationBrand(station.name))));
   }, []);
   const [selectedBrands, setSelectedBrands] = useState<string[]>(stationBrands);
+
+  function getFuelPrice(station: Station, fuelType: FuelType) {
+    if (fuelType === "petrol") return station.prices.regular_petrol;
+    if (fuelType === "diesel") return station.prices.diesel;
+    return station.prices.electric_kwh;
+  }
 
   function toggleBrand(brand: string) {
     setSelectedBrands((current) =>
@@ -69,6 +79,10 @@ export default function MapScreen() {
         return false;
       }
 
+      if (getFuelPrice(station, fuelType) == null) {
+        return false;
+      }
+
       if (!userLocation) {
         return true;
       }
@@ -82,15 +96,15 @@ export default function MapScreen() {
 
       return distance <= maxDistanceMiles;
     });
-  }, [selectedBrands, userLocation, maxDistanceMiles]);
+  }, [selectedBrands, userLocation, maxDistanceMiles, fuelType]);
 
   const cheapestStation = useMemo(() => {
     return [...filteredStations].sort((a, b) => {
-      const aPrice = a.prices.regular_petrol ?? Infinity;
-      const bPrice = b.prices.regular_petrol ?? Infinity;
+      const aPrice = getFuelPrice(a, fuelType) ?? Infinity;
+      const bPrice = getFuelPrice(b, fuelType) ?? Infinity;
       return aPrice - bPrice;
     })[0] ?? stations[0];
-  }, [filteredStations]);
+  }, [filteredStations, fuelType]);
 
   const closestStation = useMemo(() => {
     if (!userLocation) return null;
@@ -140,6 +154,8 @@ export default function MapScreen() {
       <FilterBar
         activeFilter={activeFilter}
         onChangeFilter={setActiveFilter}
+        fuelType={fuelType}
+        onChangeFuelType={setFuelType}
         maxDistanceMiles={maxDistanceMiles}
         onChangeMaxDistanceMiles={setMaxDistanceMiles}
         selectedBrands={selectedBrands}
@@ -165,8 +181,8 @@ export default function MapScreen() {
         <StationCard
           name={featuredStation.name}
           price={
-            featuredStation.prices.regular_petrol != null
-              ? `$${featuredStation.prices.regular_petrol.toFixed(2)}`
+            getFuelPrice(featuredStation, fuelType) != null
+              ? `$${getFuelPrice(featuredStation, fuelType)!.toFixed(2)}`
               : "N/A"
           }
           distance={

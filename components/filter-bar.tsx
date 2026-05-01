@@ -3,10 +3,13 @@ import { View, Pressable, Text, StyleSheet, ScrollView } from "react-native";
 import Slider from "@react-native-community/slider";
 
 type FilterMode = "cheapest" | "closest";
+type FuelType = "petrol" | "diesel" | "electric";
 
 type Props = {
   activeFilter: FilterMode;
   onChangeFilter: (filter: FilterMode) => void;
+  fuelType: FuelType;
+  onChangeFuelType: (fuelType: FuelType) => void;
   maxDistanceMiles: number;
   onChangeMaxDistanceMiles: (miles: number) => void;
   selectedBrands: string[];
@@ -17,6 +20,8 @@ type Props = {
 export default function FilterBar({
   activeFilter,
   onChangeFilter,
+  fuelType,
+  onChangeFuelType,
   maxDistanceMiles,
   onChangeMaxDistanceMiles,
   selectedBrands,
@@ -62,6 +67,52 @@ export default function FilterBar({
             </Text>
           </Pressable>
 
+          <View style={[styles.section, { position: "relative" }]}>
+            <Text style={styles.label}>Fuel Type</Text>
+
+            <Pressable
+              style={[styles.button, fuelType === "petrol" && styles.active]}
+              onPress={() => onChangeFuelType("petrol")}
+            >
+              <Text
+                style={[
+                  styles.buttonText,
+                  fuelType === "petrol" && styles.activeText,
+                ]}
+              >
+                Petrol
+              </Text>
+            </Pressable>
+
+            <Pressable
+              style={[styles.button, fuelType === "diesel" && styles.active]}
+              onPress={() => onChangeFuelType("diesel")}
+            >
+              <Text
+                style={[
+                  styles.buttonText,
+                  fuelType === "diesel" && styles.activeText,
+                ]}
+              >
+                Diesel
+              </Text>
+            </Pressable>
+
+            <Pressable
+              style={[styles.button, fuelType === "electric" && styles.active]}
+              onPress={() => onChangeFuelType("electric")}
+            >
+              <Text
+                style={[
+                  styles.buttonText,
+                  fuelType === "electric" && styles.activeText,
+                ]}
+              >
+                Electric
+              </Text>
+            </Pressable>
+          </View>
+
           <View style={styles.section}>
             <Text style={styles.label}>Within {maxDistanceMiles} miles</Text>
 
@@ -89,36 +140,38 @@ export default function FilterBar({
               </Text>
 
               <Text style={styles.buttonText}>
-                {stationMenuOpen ? "▲" : "▼"}
+                {stationMenuOpen ? "▶" : "▼"}
               </Text>
             </Pressable>
 
             {stationMenuOpen ? (
-              <ScrollView style={styles.dropdownMenu}>
-                {stationBrands.map((brand) => {
-                  const selected = selectedBrands.includes(brand);
+              <View style={styles.sideMenu}>
+                <ScrollView
+                  showsVerticalScrollIndicator
+                  contentContainerStyle={styles.sideMenuContent}
+                >
+                  {stationBrands.map((brand) => {
+                    const selected = selectedBrands.includes(brand);
 
-                  return (
-                    <Pressable
-                      key={brand}
-                      style={[
-                        styles.dropdownItem,
-                        selected && styles.active,
-                      ]}
-                      onPress={() => onToggleBrand(brand)}
-                    >
-                      <Text
-                        style={[
-                          styles.buttonText,
-                          selected && styles.activeText,
-                        ]}
+                    return (
+                      <Pressable
+                        key={brand}
+                        style={[styles.sideMenuItem, selected && styles.active]}
+                        onPress={() => onToggleBrand(brand)}
                       >
-                        {brand}
-                      </Text>
-                    </Pressable>
-                  );
-                })}
-              </ScrollView>
+                        <Text
+                          style={[
+                            styles.buttonText,
+                            selected && styles.activeText,
+                          ]}
+                        >
+                          {brand}
+                        </Text>
+                      </Pressable>
+                    );
+                  })}
+                </ScrollView>
+              </View>
             ) : null}
           </View>
         </View>
@@ -132,7 +185,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     top: 80,
-    bottom: 80,
+    bottom: 100,
     zIndex: 30,
     flexDirection: "row",
     alignItems: "center",
@@ -161,7 +214,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 12,
     elevation: 4,
-    maxHeight: "100%",
+    maxHeight: "92%",
+    width: 220,
   },
   button: {
     paddingVertical: 12,
@@ -170,9 +224,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f5f9",
     minWidth: 92,
     alignItems: "center",
+    marginBottom: 6,
   },
   active: {
-    backgroundColor: "#111827",
+    backgroundColor: "#f97316",
   },
   buttonText: {
     fontWeight: "700",
@@ -204,17 +259,48 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dropdownMenu: {
+    position: "absolute",
+    bottom: 60,
     width: 190,
-    maxHeight: 180,
+    maxHeight: 140,
     borderRadius: 12,
     backgroundColor: "#f8fafc",
     padding: 6,
+    zIndex: 50,
+    elevation: 6,
   },
   dropdownItem: {
-    paddingVertical: 10,
-    paddingHorizontal: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
     borderRadius: 10,
     backgroundColor: "#e5e7eb",
-    marginBottom: 6,
+    marginBottom: 4,
+  },
+  sideMenu: {
+    position: "absolute",
+    left: 230,          
+    top: -80,
+    height: 150,
+    bottom: 0,          
+    width: 200,
+    borderTopRightRadius: 18,
+    borderBottomRightRadius: 18,
+    backgroundColor: "white",
+    padding: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 12,
+    zIndex: 80,
+  },
+  sideMenuContent: {
+    gap: 6,
+  },
+  sideMenuItem: {
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    borderRadius: 12,
+    backgroundColor: "#f1f5f9",
+    alignItems: "center",
   },
 });
